@@ -6,7 +6,9 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(
+ *  collection="user"
+ * )
  */
 class User extends BaseUser
 {
@@ -19,4 +21,4 @@ class User extends BaseUser
     {
         parent::__construct();
     }
-} 
+}

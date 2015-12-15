@@ -1,0 +1,20 @@
+BlogBundle\Document\User:
+#FOS\UserBundle\Model\User:
+    user1:
+        username: <firstNameMale()>
+        email: user@mail.com
+        plainPassword: qwerty
+        enabled: true
+        roles: [ROLE_USER]
+    user2:
+        username: <firstNameMale()>
+        email: user2@mail.com
+        plainPassword: qwerty2
+        enabled: true
+        roles: [ROLE_USER]
+    admin:
+        username: <firstNameMale()>
+        email: admin@mail.com
+        plainPassword: admin
+        enabled: true
+        roles: [ROLE_ADMIN]

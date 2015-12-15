@@ -82,3 +82,10 @@ fos_user:
     db_driver: mongodb
     firewall_name: main
     user_class: BlogBundle\Document\User
+hautelook_alice:
+    db_drivers:
+        mongodb: ~      # Enable Doctrine ODM if is registered
+    locale: ru_RU       # Locale to used for faker; must be a valid Faker locale otherwise will fallback to en_EN
+    seed: 1             # A seed to make sure faker generates data consistently across runs, set to null to disable
+    persist_once: false # Only persist objects once if multiple files are passed
+    loading_limit: 5    # Maximum number of time the loader will try to load the files passed
