@@ -1,0 +1,16 @@
+hwi_oauth:
+    firewall_names: [secured_area]
+    resource_owners:
+        vk:
+            type:                vkontakte
+            client_id:           %vk.client.id%
+            client_secret:       %vk.client_secret%
+            options:
+                csrf: true
+    fosub:
+        # try 30 times to check if a username is available (foo, foo1, foo2 etc)
+        username_iterations: 30
+
+        # mapping between resource owners (see below) and properties
+        properties:
+            vk: oauthId
