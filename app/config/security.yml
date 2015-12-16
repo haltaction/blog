@@ -21,6 +21,19 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        secured_area:
+            anonymous: ~
+            oauth:
+
+                resource_owners:
+                    vk:            vk_login
+                login_path:        /login
+                use_forward:       false
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: blog.user.provider.oauth
+
         main:
             pattern: ^/
             form_login:

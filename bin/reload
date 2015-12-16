@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+function show_run($text, $command, $canFail = false)
+{
+    echo "\n* $text\n$command\n";
+    passthru($command, $return);
+    if (0 !== $return && !$canFail) {
+        echo "\n/!\\ The command returned $return\n";
+        exit(1);
+    }
+}
+
+// main
+show_run("schema:drop", "app/console doctrine:mongodb:schema:drop");
+show_run("schema:create", "app/console doctrine:mongodb:schema:create --index");
+show_run("schema:update", "app/console doctrine:mongodb:schema:update");
+show_run("Destroying cache dir manually", "rm -rf app/cache/*");
+show_run("Destroying uploads dir manually", "rm -rf web/uploads/*");
+show_run("Warming up dev cache", "php app/console --env=dev cache:clear");
+show_run("Fixtures", "app/console hautelook_alice:doctrine:mongodb:fixtures:load");
+show_run("schema:update", "app/console doctrine:mongodb:schema:update");
+show_run("assets:install", "app/console assets:install");
+exit(0);
