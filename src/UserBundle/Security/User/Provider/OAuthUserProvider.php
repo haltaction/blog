@@ -7,6 +7,7 @@ use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseProvider;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
+use UserBundle\Document\User;
 
 class OAuthUserProvider extends BaseProvider
 {
@@ -16,13 +17,13 @@ class OAuthUserProvider extends BaseProvider
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $userId = $response->getUsername();
-        $user = $this->userManager->findUserBy(array($this->getProperty($response) => $userId));
+        $user = $this->userManager->findUserBy(array($this->getProperty($response) => $userId.''));
         $email = $response->getEmail();
         $username = $response->getNickname() ?: $response->getRealName();
         if (null === $user) {
-            $user = $this->userManager->findUserByUsernameAndEmail($username, $email);
+            $user = $this->userManager->findUserByEmail($email);
             if (null === $user || !$user instanceof UserInterface) {
-                $user = $this->userManager->createUser();
+                $user = new User();
                 $username = str_replace(' ', '', $username);
                 $user->setUsername($username);
                 $user->setEmail($email);
