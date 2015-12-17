@@ -1,5 +1,4 @@
-BlogBundle\Document\User:
-#FOS\UserBundle\Model\User:
+UserBundle\Document\User:
     user1:
         username: <firstNameMale()>
         email: user@mail.com

@@ -21,8 +21,9 @@ class AppKernel extends Kernel
             new BlogBundle\BlogBundle(),
             new Hautelook\AliceBundle\HautelookAliceBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-
-    );
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new UserBundle\UserBundle(),
+        );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();

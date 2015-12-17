@@ -21,6 +21,28 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        secured_area:
+#            pattern:    ^/(login|connect)
+            form_login:
+                provider: fos_userbundle
+                login_path: /login
+#                check_path: /login/login_check
+            anonymous: true
+            oauth:
+                resource_owners:
+#                    twitter:           "/login/check-twitter"
+#                    google:             "/login/check-google"
+#                    my_custom_provider: "/login/check-custom"
+                    github:          /login/check-github
+                login_path:        /
+                use_forward:       false
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: user.provider.oauth
+#                    service: hwi_oauth.user.provider.fosub_bridge
+            logout:       true
+
         main:
             pattern: ^/
             form_login:
@@ -37,7 +59,7 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     access_control:
-            - { path: ^/.*$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#            - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#            - { path: ^/.*$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #            - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #            - { path: ^/admin/, role: ROLE_ADMIN }

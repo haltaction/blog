@@ -1,0 +1,31 @@
+hwi_oauth:
+    # list of names of the firewalls in which this bundle is active, this setting MUST be set
+    firewall_names: [secured_area]
+    resource_owners:
+        twitter:
+            type:            twitter
+            client_id:       6m7Ib8WxBPpOtRAz2aZkP51uX
+            client_secret:   KMFsetyUCj3AFqTrbWOe1JbgWobOTBqCyIY8dNoLnhK8fM7NC7
+            options:
+                csrf: true
+        github:
+            type:            github
+            client_id:       51ab160ae65be9b307d2
+            client_secret:   14243b1223322a1fd03f28d42edf13a3fc6579d0
+            scope:           "user:email"
+            options:
+                csrf: true
+            paths:
+                identifier: login
+    fosub:
+        # try 30 times to check if a username is available (foo, foo1, foo2 etc)
+        username_iterations: 30
+
+        # mapping between resource owners (see below) and properties
+        properties:
+            github: githubId
+#            google: googleId
+#            facebook: facebookId
+#            my_custom_provider: customId
+    connect:
+        account_connector: user.provider.oauth
