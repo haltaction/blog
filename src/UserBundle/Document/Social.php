@@ -12,7 +12,7 @@ class Social
     /**
      * @MongoDB\String
      */
-    protected $service;
+    protected $serviceName;
 
     /**
      * @MongoDB\String
@@ -24,16 +24,16 @@ class Social
      */
     public function getService()
     {
-        return $this->service;
+        return $this->serviceName;
     }
 
     /**
-     * @param mixed $service
+     * @param mixed serviceName
      * @return self
      */
-    public function setService($service)
+    public function setService($serviceName)
     {
-        $this->service = $service;
+        $this->serviceName = $serviceName;
         return $this;
     }
 

@@ -7,7 +7,7 @@
     <services>
 
         <service
-                id="blog.user.user.repository"
+                id="user.user.repository"
                 class="UserBundle\Document\UserRepository"
                 factory-service="doctrine.odm.mongodb.document_manager"
                 factory-method="getRepository">

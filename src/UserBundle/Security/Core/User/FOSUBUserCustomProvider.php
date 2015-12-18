@@ -2,6 +2,8 @@
 
 namespace UserBundle\Security\Core\User;
 
+use Doctrine\ODM\MongoDB\DocumentRepository;
+use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,12 +14,32 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 class FOSUBUserCustomProvider extends BaseClass
 {
     /**
+     * @var DocumentRepository
+     */
+    protected $userRepository;
+
+    /**
+     * Constructor.
+     *
+     * @param UserManagerInterface $userManager FOSUB user provider.
+     * @param DocumentRepository $userRepository custom user repository service.
+     * @param array                $properties  Property mapping.
+     */
+    public function __construct(UserManagerInterface $userManager, DocumentRepository $userRepository, array $properties)
+    {
+        parent::__construct($userManager, $properties);
+        $this->userRepository = $userRepository;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $username = $response->getUsername();
+        $username = $response->getNickname();
         $userManager = $this->userManager;
+        $service = $response->getResourceOwner()->getName();
+        $serviceId = $response->getUsername();
         $user = $userManager->findUserByUsername($username);
 
         if (null === $user) {
@@ -25,23 +47,22 @@ class FOSUBUserCustomProvider extends BaseClass
             $user = $userManager->findUserByEmail($email);
 
             if (null === $user) {
-                $service = $response->getResourceOwner()->getName();
-//                $serviceId = $response['id']; todo get social ID
                 $user = $userManager->createUser();
                 $user->setUsername($username);
                 $user->setEmail($email);
                 $user->setPassword('');
                 $user->setEnabled(true);
 
-                $social = new Social();
-                // todo find id in social and return user if isset
-                $user->addSocial($social->setService($service)->setUserId($username));
-
                 $userManager->updateUser($user);
-
-                return $user;
             }
-            return $user;
+        }
+
+        // add social data to user document
+        $userSocial = $this->userRepository->findUserByService($service, $serviceId);
+        if (null === $userSocial) {
+            $social = new Social();
+            $user->addSocial($social->setService($service)->setUserId($serviceId));
+            $userManager->updateUser($user);
         }
 
         return $user;

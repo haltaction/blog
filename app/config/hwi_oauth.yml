@@ -10,7 +10,7 @@ hwi_oauth:
                 csrf: true
                 include_email: true
             paths:
-                identifier: screen_name
+                nickname: screen_name
         github:
             type:            github
             client_id:       51ab160ae65be9b307d2
@@ -19,13 +19,13 @@ hwi_oauth:
             options:
                 csrf: true
             paths:
-                identifier: login
+                nickname: login
         linkedin:
             type:           linkedin
             client_id:      774w4rc4lwmn53
             client_secret:  45rw8KryFFGQ76WE
             paths:
-                identifier: formattedName
+                nickname: formattedName
 #            scope:          "r_basicprofile, r_emailaddress"
     fosub:
         # try 30 times to check if a username is available (foo, foo1, foo2 etc)
