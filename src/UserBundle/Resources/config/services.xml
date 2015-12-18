@@ -12,6 +12,8 @@
             <argument type="service" id="fos_user.user_manager" />
             <argument type="collection">
                 <argument type="string" key="github">githubId</argument>
+                <argument type="string" key="twitter">twitterId</argument>
+                <argument type="string" key="linkedin">linkedinId</argument>
             </argument>
         </service>
     </services>

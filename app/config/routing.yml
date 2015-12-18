@@ -15,5 +15,8 @@ hwi_oauth_login:
 github_login:
     path: /login/check-github
 
-#twitter_login:
-#    path: /login/check-twitter
+twitter_login:
+    path: /login/check-twitter
+
+linkedin_login:
+    path: /login/check-linkedin

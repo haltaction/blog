@@ -8,6 +8,9 @@ hwi_oauth:
             client_secret:   KMFsetyUCj3AFqTrbWOe1JbgWobOTBqCyIY8dNoLnhK8fM7NC7
             options:
                 csrf: true
+                include_email: true
+            paths:
+                identifier: screen_name
         github:
             type:            github
             client_id:       51ab160ae65be9b307d2
@@ -17,6 +20,13 @@ hwi_oauth:
                 csrf: true
             paths:
                 identifier: login
+        linkedin:
+            type:           linkedin
+            client_id:      774w4rc4lwmn53
+            client_secret:  45rw8KryFFGQ76WE
+            paths:
+                identifier: formattedName
+#            scope:          "r_basicprofile, r_emailaddress"
     fosub:
         # try 30 times to check if a username is available (foo, foo1, foo2 etc)
         username_iterations: 30
@@ -24,8 +34,7 @@ hwi_oauth:
         # mapping between resource owners (see below) and properties
         properties:
             github: githubId
-#            google: googleId
-#            facebook: facebookId
-#            my_custom_provider: customId
+            twitter: twitterId
+            linkedin: linkedinId
     connect:
         account_connector: user.provider.oauth

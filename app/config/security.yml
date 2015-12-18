@@ -30,17 +30,15 @@ security:
             anonymous: true
             oauth:
                 resource_owners:
-#                    twitter:           "/login/check-twitter"
-#                    google:             "/login/check-google"
-#                    my_custom_provider: "/login/check-custom"
-                    github:          /login/check-github
+                    github:     "/login/check-github"
+                    twitter:    "/login/check-twitter"
+                    linkedin:   "/login/check-linkedin"
                 login_path:        /
                 use_forward:       false
                 failure_path:      /login
 
                 oauth_user_provider:
                     service: user.provider.oauth
-#                    service: hwi_oauth.user.provider.fosub_bridge
             logout:       true
 
         main:
