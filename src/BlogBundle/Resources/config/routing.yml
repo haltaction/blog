@@ -2,6 +2,7 @@ blog_homepage:
     path:     /
     defaults: { _controller: BlogBundle:Default:index }
 
-#login:
-#    path:     /login
-#    defaults: { _controller: BlogBundle:Login:login }
+blog_add_article:
+    path:   /article/add
+    defaults: { _controller: BlogBundle:Article:add }
+    methods: [GET, POST]

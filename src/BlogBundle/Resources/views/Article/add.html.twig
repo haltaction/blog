@@ -1,0 +1,10 @@
+{% extends "BlogBundle::base.html.twig" %}
+
+{% block title %}Article:add{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Article:add page</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
