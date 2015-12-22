@@ -2,7 +2,6 @@
 
 namespace BlogBundle\Document;
 
-use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -12,12 +11,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *  collection="Articles"
  * )
  */
-class Article {
+class Article
+{
     /**
      * @MongoDB\Id(strategy="auto")
      */
     protected $id;
-
 
     /**
      * @Assert\NotBlank()
@@ -62,6 +61,14 @@ class Article {
      * @MongoDB\Date(nullable=true)
      */
     protected $deletedAt;
+
+    /**
+     * Constructor. Set default data
+     */
+    public function __construct()
+    {
+        $this->setViewsNumber(0);
+    }
 
     /**
      * @return mixed
@@ -207,5 +214,4 @@ class Article {
         $this->deletedAt = $deletedAt;
         return $this;
     }
-
 } 

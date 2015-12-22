@@ -19,7 +19,9 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
 
-            $article->setTags([$article->getTags() => '']);
+            $article->setTags(
+                $this->get('blog.tag')->getTagIds($article->getTags())
+            );
 
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
