@@ -41,6 +41,8 @@ class Article
     protected $content;
 
     /**
+     * @Assert\NotBlank()
+     *
      * @MongoDB\Hash()
      */
     protected $tags;
@@ -63,7 +65,7 @@ class Article
     protected $deletedAt;
 
     /**
-     * Constructor. Set default data
+     * Constructor. Set default data.
      */
     public function __construct()
     {
@@ -80,14 +82,15 @@ class Article
 
     /**
      * @param mixed $id
+     *
      * @return self
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
-
 
     /**
      * @return mixed
@@ -99,11 +102,13 @@ class Article
 
     /**
      * @param mixed $title
+     *
      * @return self
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -117,11 +122,13 @@ class Article
 
     /**
      * @param mixed $slug
+     *
      * @return self
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
         return $this;
     }
 
@@ -135,11 +142,13 @@ class Article
 
     /**
      * @param mixed $content
+     *
      * @return self
      */
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -153,11 +162,13 @@ class Article
 
     /**
      * @param mixed $tags
+     *
      * @return self
      */
     public function setTags($tags)
     {
         $this->tags = $tags;
+
         return $this;
     }
 
@@ -171,11 +182,13 @@ class Article
 
     /**
      * @param mixed $viewsNumber
+     *
      * @return self
      */
     public function setViewsNumber($viewsNumber)
     {
         $this->viewsNumber = $viewsNumber;
+
         return $this;
     }
 
@@ -189,11 +202,13 @@ class Article
 
     /**
      * @param mixed $viewsUsers
+     *
      * @return self
      */
     public function setViewsUsers($viewsUsers)
     {
         $this->viewsUsers = $viewsUsers;
+
         return $this;
     }
 
@@ -207,11 +222,13 @@ class Article
 
     /**
      * @param mixed $deletedAt
+     *
      * @return self
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+
         return $this;
     }
-} 
+}

@@ -33,5 +33,4 @@ class ArticleController extends Controller
             'form' => $form->createView(),
         ));
     }
-
 }

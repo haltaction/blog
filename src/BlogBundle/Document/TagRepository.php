@@ -13,4 +13,4 @@ class TagRepository extends DocumentRepository
 
         return $query->getQuery()->getSingleResult();
     }
-} 
+}

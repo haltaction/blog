@@ -28,7 +28,7 @@ class Tag
     protected $numberArticles;
 
     /**
-     * Constructor. Set default data
+     * Constructor. Set default data.
      */
     public function __construct()
     {
@@ -53,11 +53,13 @@ class Tag
 
     /**
      * @param mixed $name
+     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -71,11 +73,13 @@ class Tag
 
     /**
      * @param mixed $numberArticles
+     *
      * @return self
      */
     public function setNumberArticles($numberArticles)
     {
         $this->numberArticles = $numberArticles;
+
         return $this;
     }
 
@@ -84,7 +88,8 @@ class Tag
      */
     public function incrementNumberArticles()
     {
-        $this->numberArticles++;
+        ++$this->numberArticles;
+
         return $this;
     }
 
@@ -93,7 +98,8 @@ class Tag
      */
     public function decrementNumberArticles()
     {
-        $this->numberArticles--;
+        --$this->numberArticles;
+
         return $this;
     }
 }
