@@ -3,6 +3,7 @@
 namespace BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
@@ -11,7 +12,7 @@ class ArticleController extends Controller
     {
         $form = $this->get('form.factory')
             ->createBuilder($this->get('blog.form.type.article'))
-            ->add('save', 'submit')
+            ->add('save', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
