@@ -23,7 +23,8 @@
         "hautelook/alice-bundle": "^1.1",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "hwi/oauth-bundle": "dev-master#469e5458188a05f3909213f612fa97553a6d5c7e",
-        "stof/doctrine-extensions-bundle": "~1.2.1"
+        "stof/doctrine-extensions-bundle": "~1.2.1",
+        "stfalcon/tinymce-bundle": "0.4.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
