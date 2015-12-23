@@ -8,7 +8,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @MongoDB\Document(
- *  collection="Articles"
+ *  collection="Articles",
+ *  repositoryClass="BlogBundle\Document\ArticleRepository"
  * )
  */
 class Article
@@ -63,6 +64,12 @@ class Article
      * @MongoDB\Date(nullable=true)
      */
     protected $deletedAt;
+
+    /**
+     * @MongoDB\Timestamp()
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updatedAt;
 
     /**
      * Constructor. Set default data.

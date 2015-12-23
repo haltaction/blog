@@ -1,6 +1,7 @@
-blog_homepage:
+blog_list_articles:
     path:     /
-    defaults: { _controller: BlogBundle:Default:index }
+    defaults: { _controller: BlogBundle:Article:list }
+    methods: [GET]
 
 blog_add_article:
     path:   /article/add

@@ -1,0 +1,21 @@
+{% extends "BlogBundle::base.html.twig" %}
+
+{% block title %}Article:list{% endblock %}
+
+{% block content %}
+<h1>Список статтей</h1>
+    Статьи отсортированы: По новизне / По количеству просмотров todo
+
+    {% for article in articles %}
+        <li class="list-unstyled"><a href="/article/{{ article.slug }}">{{ article.title|title }}</a>
+            {# todo create filter for slice first 2 sentence #}
+        <div class="well">{{ article.content|striptags|slice(1, 30) }}</div>
+        </li>
+
+    {% endfor %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

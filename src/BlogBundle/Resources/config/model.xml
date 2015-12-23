@@ -14,6 +14,14 @@
             <argument>BlogBundle\Document\Tag</argument>
         </service>
 
+        <service
+                id="blog.article.repository"
+                class="BlogBundle\Document\ArticleRepository"
+                factory-service="doctrine.odm.mongodb.document_manager"
+                factory-method="getRepository">
+            <argument>BlogBundle\Document\Article</argument>
+        </service>
+
     </services>
 
 </container>

@@ -34,4 +34,13 @@ class ArticleController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function listAction()
+    {
+        $articles = iterator_to_array($this->get('blog.article.repository')->getAllArticlesByUpdated());
+
+        return $this->render('BlogBundle:Article:list.html.twig', array(
+            'articles' => $articles
+        ));
+    }
 }
