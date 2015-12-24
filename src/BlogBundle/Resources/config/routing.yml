@@ -7,3 +7,8 @@ blog_add_article:
     path:   /article/add
     defaults: { _controller: BlogBundle:Article:add }
     methods: [GET, POST]
+
+blog_edit_article:
+    path:   /article/edit/{slug}
+    defaults: { _controller: BlogBundle:Article:edit }
+    methods: [GET, POST]

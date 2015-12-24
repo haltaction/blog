@@ -7,7 +7,8 @@
     Статьи отсортированы: По новизне / По количеству просмотров todo
 
     {% for article in articles %}
-        <li class="list-unstyled"><a href="/article/{{ article.slug }}">{{ article.title|title }}</a>
+        {# todo link to post without "edit", just for view. Link to edit show only for admin in different place #}
+        <li class="list-unstyled"><a href="/article/edit/{{ article.slug }}">{{ article.title|title }}</a>
             {# todo create filter for slice first 2 sentence #}
         <div class="well">{{ article.content|striptags|slice(1, 30) }}</div>
         </li>

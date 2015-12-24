@@ -168,6 +168,14 @@ class Article
     }
 
     /**
+     * @return string
+     */
+    public function getTagsString()
+    {
+        return implode(",", array_keys($this->tags));
+    }
+
+    /**
      * @param mixed $tags
      *
      * @return self

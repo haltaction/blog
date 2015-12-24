@@ -2,6 +2,7 @@
 
 namespace BlogBundle;
 
+use BlogBundle\Document\Article;
 use BlogBundle\Document\Tag;
 use BlogBundle\Document\TagRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -37,21 +38,68 @@ class TagService
     public function getTagIds($tagsString = '')
     {
         $tags = explode(',', $tagsString);
+        $tags = array_unique($tags);
         $tagsHash = [];
 
         if (is_array($tags)) {
             foreach ($tags as $tag) {
                 $tag = trim($tag);
-                $tagDocument = $this->tagRepository->getTagByName($tag);
-
-                if (empty($tagDocument)) {
-                    $tagDocument = new Tag();
-                    $tagDocument->setName($tag);
-                    $this->documentManager->persist($tagDocument);
-                }
-
-                $tagDocument->incrementNumberArticles();
+                $tagDocument = $this->createNewTag($tag);
                 $tagsHash[$tag] = $tagDocument->getId();
+            }
+        }
+
+        return $tagsHash;
+    }
+
+    /**
+     * @param $tag string
+     * @return Tag
+     */
+    public function createNewTag($tag)
+    {
+        $tagDocument = $this->tagRepository->getTagByName($tag);
+
+        if (empty($tagDocument)) {
+            $tagDocument = new Tag();
+            $tagDocument->setName($tag);
+            $this->documentManager->persist($tagDocument);
+        }
+
+        $tagDocument->incrementNumberArticles();
+
+        return $tagDocument;
+    }
+
+    public function updateTagsIds(Article $articleNew, Article $articleOld)
+    {
+        $tagsNew = explode(',', $articleNew->getTags());
+        $tagsNew = array_map('trim', $tagsNew);
+        $tagsNew = array_unique($tagsNew);
+        $tagsOld = explode(',', $articleOld->getTags());
+        $tagsOld = array_map('trim', $tagsOld);
+        $tagsOld = array_unique($tagsOld);
+        $tagsHash = [];
+
+        foreach ($tagsNew as $tag) {
+            if (empty($tag)) {
+                // skip empty tags
+                continue;
+            }
+            if (in_array($tag, $tagsOld)) {
+                // tag already exist, just get id
+                $tagsHash[$tag] = $this->tagRepository->getTagByName($tag)->getId();
+            } else {
+                // create tag & increment number
+                $tagsHash[$tag] = $this->createNewTag($tag)->getId();
+            }
+        }
+
+        foreach ($tagsOld as $tag) {
+            if (!in_array($tag, $tagsNew)) {
+                // decrement removed or changed tags
+                $tagDocument = $this->tagRepository->getTagByName($tag)->decrementNumberArticles();
+                $this->documentManager->persist($tagDocument);
             }
         }
 
