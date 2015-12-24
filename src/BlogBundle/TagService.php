@@ -96,6 +96,10 @@ class TagService
         }
 
         foreach ($tagsOld as $tag) {
+            if (empty($tag)) {
+                // skip empty tags
+                continue;
+            }
             if (!in_array($tag, $tagsNew)) {
                 // decrement removed or changed tags
                 $tagDocument = $this->tagRepository->getTagByName($tag)->decrementNumberArticles();

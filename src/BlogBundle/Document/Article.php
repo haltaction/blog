@@ -22,6 +22,9 @@ class Article
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=250)
+     * @Assert\Regex("/^[\w\d .,-]*$/",
+     *      message="Special characters not allowed"
+     * )
      *
      * @MongoDB\String()
      */
@@ -42,7 +45,9 @@ class Article
     protected $content;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\Regex("/^[\w\d .,-]*$/",
+     *      message="Special characters not allowed"
+     * )
      *
      * @MongoDB\Hash()
      */

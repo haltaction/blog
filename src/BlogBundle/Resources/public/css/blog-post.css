@@ -12,7 +12,8 @@ footer {
     margin: 50px 0;
 }
 
-.login-wrapper .req:after {
+.login-wrapper .req:after,
+.req label:after {
     content: " *";
     color: #ff0000;
 }
