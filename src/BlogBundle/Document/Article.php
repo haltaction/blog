@@ -25,7 +25,7 @@ class Article
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=250)
-     * @Assert\Regex("/^[\w\d .,-]*$/",
+     * @Assert\Regex("/^[\w\d\p{L} .,-]*$/u",
      *      message="Special characters not allowed"
      * )
      *
@@ -48,7 +48,7 @@ class Article
     protected $content;
 
     /**
-     * @Assert\Regex("/^[\w\d .,-]*$/",
+     * @Assert\Regex("/^[\w\d\p{L} .,-]*$/u",
      *      message="Special characters not allowed"
      * )
      *
