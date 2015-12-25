@@ -49,7 +49,6 @@
                 <li>
                     {% block login_logout %}
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |#}
                             <a href="{{ path('fos_user_security_logout') }}">
                                 {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                             </a>
@@ -58,6 +57,12 @@
                         {% endif %}
                     {% endblock %}
                 </li>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li>|</li>
+                    <li>
+                        <a href="{{ path('blog_add_article') }}">Создать статью</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         <!-- /.navbar-collapse -->

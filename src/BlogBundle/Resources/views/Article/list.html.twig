@@ -8,9 +8,18 @@
 
     {% for article in articles %}
         {# todo link to post without "edit", just for view. Link to edit show only for admin in different place #}
-        <li class="list-unstyled"><a href="/article/edit/{{ article.slug }}">{{ article.title|title }}</a>
+        <li class="list-unstyled">
+            {#<a href="/article/{{ article.slug }}">#}
+                <h3>{{ article.title|title }}</h3>
+            {#</a>#}
             {# todo create filter for slice first 2 sentence #}
-        <div class="well">{{ article.content|striptags|slice(1, 30) }}</div>
+            <div class="well">{{ article.content|striptags|slice(1, 30) }}</div>
+            {% if is_granted("ROLE_ADMIN") %}
+                <div class="bs-callout bs-callout-warning admin-links">
+                    <a href="{{ path('blog_edit_article', {'slug': article.slug }) }}" class="btn btn-default btn-xs">Edit</a>
+                    <a href="/article/delete/{{ article.slug }}" class="btn btn-default btn-xs">Delete</a>
+                </div>
+            {% endif %}
         </li>
 
     {% endfor %}

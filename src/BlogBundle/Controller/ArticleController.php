@@ -11,6 +11,8 @@ class ArticleController extends Controller
     public function addAction(Request $request)
     {
         // todo check admin role
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
         $form = $this->get('form.factory')
             ->createBuilder($this->get('blog.form.type.article'))
             ->add('save', SubmitType::class)
@@ -47,7 +49,8 @@ class ArticleController extends Controller
 
     public function editAction($slug, Request $request)
     {
-        // todo check admin role
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
         $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
         $article->setTags($article->getTagsString());
         $articleOld = clone $article;
