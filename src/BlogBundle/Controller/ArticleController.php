@@ -10,8 +10,7 @@ class ArticleController extends Controller
 {
     public function addAction(Request $request)
     {
-        // todo check admin role
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+//        $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
         $form = $this->get('form.factory')
             ->createBuilder($this->get('blog.form.type.article'))
@@ -40,7 +39,7 @@ class ArticleController extends Controller
 
     public function listAction()
     {
-        $articles = iterator_to_array($this->get('blog.article.repository')->getAllArticlesByUpdated());
+        $articles = $this->get('blog.article.repository')->getAllArticlesByUpdated();
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
             'articles' => $articles

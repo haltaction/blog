@@ -22,7 +22,7 @@ class TagService
 
     /**
      * @param DocumentRepository $tagRepository
-     * @param DocumentManager $documentManager
+     * @param DocumentManager    $documentManager
      */
     public function __construct(DocumentRepository $tagRepository, DocumentManager $documentManager)
     {
@@ -41,12 +41,14 @@ class TagService
         $tags = array_unique($tags);
         $tagsHash = [];
 
-        if (is_array($tags)) {
-            foreach ($tags as $tag) {
-                $tag = trim($tag);
-                $tagDocument = $this->createNewTag($tag);
-                $tagsHash[$tag] = $tagDocument->getId();
+        foreach ($tags as $tag) {
+            $tag = trim($tag);
+            if (empty($tag)) {
+                // skip empty tags
+                continue;
             }
+            $tagDocument = $this->createNewTag($tag);
+            $tagsHash[$tag] = $tagDocument->getId();
         }
 
         return $tagsHash;
@@ -54,13 +56,12 @@ class TagService
 
     /**
      * @param $tag string
+     *
      * @return Tag
      */
     public function createNewTag($tag)
     {
-        $tagDocument = $this->tagRepository->getTagByName($tag);
-
-        if (empty($tagDocument)) {
+        if (!$tagDocument = $this->tagRepository->getTagByName($tag)) {
             $tagDocument = new Tag();
             $tagDocument->setName($tag);
             $this->documentManager->persist($tagDocument);

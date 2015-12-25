@@ -11,6 +11,6 @@ class ArticleRepository extends DocumentRepository
         return $this->createQueryBuilder()
             ->sort('updatedAt', 'DESC')
             ->getQuery()
-            ->execute();
+            ->toArray();
     }
 } 

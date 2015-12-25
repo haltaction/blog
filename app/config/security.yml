@@ -5,8 +5,7 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_USER:  [ROLE_USER]
-        ROLE_ADMIN: [ROLE_ADMIN]
+        ROLE_ADMIN: [ROLE_USER]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
@@ -22,7 +21,7 @@ security:
             security: false
 
         secured_area:
-#            pattern:    ^/(login|connect)
+            pattern:    ^/(login|connect)*
             form_login:
                 provider: fos_userbundle
                 login_path: /login
@@ -63,5 +62,5 @@ security:
     access_control:
 #            - { path: ^/.*$, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#            - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#            - { path: ^/admin/, role: ROLE_ADMIN }
+            - { path: ^/article/add$, roles: ROLE_ADMIN }
+            - { path: ^/admin/, role: ROLE_ADMIN }
