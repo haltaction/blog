@@ -16,8 +16,8 @@
             <div class="well">{{ article.content|striptags|slice(1, 30) }}</div>
             {% if is_granted("ROLE_ADMIN") %}
                 <div class="bs-callout bs-callout-warning admin-links">
-                    <a href="{{ path('blog_edit_article', {'slug': article.slug }) }}" class="btn btn-default btn-xs">Edit</a>
-                    <a href="/article/delete/{{ article.slug }}" class="btn btn-default btn-xs">Delete</a>
+                    <a href="{{ path('blog_edit_article', {'slug': article.slug}) }}" class="btn btn-default btn-xs">Edit</a>
+                    <a href="{{ path('blog_delete_article', {'slug': article.slug}) }}" class="btn btn-default btn-xs">Delete</a>
                 </div>
             {% endif %}
         </li>

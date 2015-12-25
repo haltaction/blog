@@ -12,3 +12,8 @@ blog_edit_article:
     path:   /article/edit/{slug}
     defaults: { _controller: BlogBundle:Article:edit }
     methods: [GET, POST]
+
+blog_delete_article:
+    path:   /article/delete/{slug}
+    defaults: { _controller: BlogBundle:Article:delete }
+    methods: [GET]

@@ -11,6 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *  collection="Articles",
  *  repositoryClass="BlogBundle\Document\ArticleRepository"
  * )
+ * @Gedmo\SoftDeleteable(
+*   fieldName="deletedAt"
+ * )
  */
 class Article
 {

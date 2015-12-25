@@ -75,4 +75,15 @@ class ArticleController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function deleteAction($slug)
+    {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
+        $this->get('doctrine.odm.mongodb.document_manager')->remove($article);
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return $this->redirect($this->generateUrl('blog_list_articles'));
+    }
 }
