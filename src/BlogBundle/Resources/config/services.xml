@@ -16,5 +16,11 @@
             <tag name="hautelook_alice.faker.provider"/>
         </service>
 
+        <service id="blog.twig_extension"
+                 class="BlogBundle\Twig\TwigExtension"
+                 public="false">
+            <tag name="twig.extension" />
+        </service>
+
     </services>
 </container>

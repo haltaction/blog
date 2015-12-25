@@ -13,11 +13,11 @@
                 <h3>{{ article.title|title }}</h3>
             {#</a>#}
             {# todo create filter for slice first 2 sentence #}
-            <div class="well">{{ article.content|striptags|slice(1, 30) }}</div>
+            <div class="well">{{ article.content|striptags|replace({'&nbsp;': " "})|sentencesLimit(2) }}</div>
             {% if is_granted("ROLE_ADMIN") %}
                 <div class="bs-callout bs-callout-warning admin-links">
-                    <a href="{{ path('blog_edit_article', {'slug': article.slug}) }}" class="btn btn-default btn-xs">Edit</a>
-                    <a href="{{ path('blog_delete_article', {'slug': article.slug}) }}" class="btn btn-default btn-xs">Delete</a>
+                    <a href="{{ path('blog_edit_article', {'slug': article.slug}) }}" class="btn btn-info btn-xs">Edit</a>
+                    <a href="{{ path('blog_delete_article', {'slug': article.slug}) }}" class="pull-right btn btn-danger btn-xs">Delete</a>
                 </div>
             {% endif %}
         </li>
