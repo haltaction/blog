@@ -1,0 +1,7 @@
+BlogBundle\Document\Article:
+    article_{1..12}:
+#    article_{1..2}:
+        title: <sentence($nbWords = 3)>
+        content: <text($maxNbChars = 800)>
+#        tags: <mongoHash(@tag<current()>, @tag2<current()>)>
+        tags: <mongoHash([@tag1, @tag2])>

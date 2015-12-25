@@ -11,5 +11,10 @@
             <argument type="service" id="doctrine.odm.mongodb.document_manager" />
         </service>
 
+        <service id="faker.provider.hash"
+                 class="BlogBundle\DataFixtures\ODM\LoadFixtureData">
+            <tag name="hautelook_alice.faker.provider"/>
+        </service>
+
     </services>
 </container>
