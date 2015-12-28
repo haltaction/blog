@@ -48,9 +48,6 @@ class Article
     protected $content;
 
     /**
-     * @Assert\Regex("/^[\w\d\p{L} .,-]*$/u",
-     *      message="Special characters not allowed"
-     * )
      *
      * @MongoDB\Hash()
      */
@@ -173,14 +170,6 @@ class Article
     public function getTags()
     {
         return $this->tags;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTagsString()
-    {
-        return implode(",", array_keys($this->tags));
     }
 
     /**

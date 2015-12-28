@@ -3,6 +3,7 @@
 namespace BlogBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,23 @@ class ArticleType extends AbstractType
         $builder->add('tags', TextType::class, array(
             'required' => false
         ));
+
+        $builder->get('tags')
+            ->addModelTransformer(new CallbackTransformer(
+                // from Document to form element
+                function ($mongoHash) {
+                    return ($mongoHash) ? implode(",", array_keys($mongoHash)) : null;
+                },
+                // from form element to mongo Hash with empty values(Tag ids)
+                function ($tagsString) {
+                    $tags = explode(',', $tagsString);
+                    $tags = array_map('trim', $tags);
+                    $tags = array_unique($tags);
+                    $tags = array_fill_keys($tags, '');
+
+                    return $tags;
+                }
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

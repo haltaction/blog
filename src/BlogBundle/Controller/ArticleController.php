@@ -51,7 +51,6 @@ class ArticleController extends Controller
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
         $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
-        $article->setTags($article->getTagsString());
         $articleOld = clone $article;
 
 
@@ -62,7 +61,9 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
-            $article->setTags($this->get('blog.tag')->updateTagsIds($article, $articleOld));
+            $article->setTags(
+                $this->get('blog.tag')->updateTagsIds($article, $articleOld)
+            );
 
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
