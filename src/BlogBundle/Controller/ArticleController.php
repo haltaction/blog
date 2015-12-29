@@ -42,7 +42,13 @@ class ArticleController extends Controller
 
     public function listAction()
     {
-        $articles = $this->get('blog.article.repository')->getAllArticlesByUpdated();
+        $request = Request::createFromGlobals();
+        $sort = $request->get('sort');
+        if (("newest" == $sort) || empty($sort)) {
+            $articles = $this->get('blog.article.repository')->getAllArticlesByCreated();
+        } elseif ("popular" == $sort) {
+            $articles = $this->get('blog.article.repository')->getAllArticlesByViews();
+        }
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
             'articles' => $articles

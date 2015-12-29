@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *  repositoryClass="BlogBundle\Document\ArticleRepository"
  * )
  * @Gedmo\SoftDeleteable(
-*   fieldName="deletedAt"
+ *   fieldName="deletedAt"
  * )
  */
 class Article
@@ -48,7 +48,6 @@ class Article
     protected $content;
 
     /**
-     *
      * @MongoDB\Hash()
      */
     protected $tags;
@@ -75,6 +74,12 @@ class Article
      * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
+
+    /**
+     * @MongoDB\Timestamp()
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
 
     /**
      * Constructor. Set default data.
@@ -237,6 +242,7 @@ class Article
 
     /**
      * @param array $userInfo
+     *
      * @return $this
      */
     public function addViewsUser(array $userInfo)
@@ -248,6 +254,7 @@ class Article
 
     /**
      * @param array $userInfo
+     *
      * @return array viewsUser or bool false
      */
     public function findViewUser(array $userInfo)
@@ -278,6 +285,26 @@ class Article
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     *
+     * @return self
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

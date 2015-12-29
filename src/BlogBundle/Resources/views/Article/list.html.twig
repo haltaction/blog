@@ -4,10 +4,22 @@
 
 {% block content %}
 <h1>Список статтей</h1>
-    Статьи отсортированы: По новизне / По количеству просмотров todo
+    <span>Статьи отсортированы:
+        {% set sort = app.request.get('sort') %}
+        {% if (("newest" == sort) or (sort is empty)) %}
+            По новизне
+        {% else %}
+            <a href="{{ path('blog_list_articles') }}?sort=newest">По новизне</a>
+        {% endif %}
+            /
+        {% if ("popular" == sort) %}
+            По количеству просмотров
+        {% else %}
+            <a href="{{ path('blog_list_articles') }}?sort=popular">По количеству просмотров</a>
+        {% endif %}
+        </span>
 
     {% for article in articles %}
-        {# todo link to post without "edit", just for view. Link to edit show only for admin in different place #}
         <li class="list-unstyled">
             <a href="/article/{{ article.slug }}">
                 <h3>{{ article.title|title }}</h3>
