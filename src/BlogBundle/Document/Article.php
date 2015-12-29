@@ -59,7 +59,7 @@ class Article
     protected $viewsNumber;
 
     /**
-     * @MongoDB\Hash()
+     * @MongoDB\Collection()
      */
     protected $viewsUsers;
 
@@ -82,6 +82,7 @@ class Article
     public function __construct()
     {
         $this->setViewsNumber(0);
+        $this->viewsUsers = array();
     }
 
     /**
@@ -205,6 +206,16 @@ class Article
     }
 
     /**
+     * @return $this
+     */
+    public function incrementViewsNumber()
+    {
+        ++$this->viewsNumber;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getViewsUsers()
@@ -217,11 +228,38 @@ class Article
      *
      * @return self
      */
-    public function setViewsUsers($viewsUsers)
+    public function setViewsUsers(array $viewsUsers)
     {
         $this->viewsUsers = $viewsUsers;
 
         return $this;
+    }
+
+    /**
+     * @param array $userInfo
+     * @return $this
+     */
+    public function addViewsUser(array $userInfo)
+    {
+        array_push($this->viewsUsers, $userInfo);
+
+        return $this;
+    }
+
+    /**
+     * @param array $userInfo
+     * @return array viewsUser or bool false
+     */
+    public function findViewUser(array $userInfo)
+    {
+        foreach ($this->viewsUsers as $viewUser) {
+            $diff = array_diff_assoc($viewUser, $userInfo);
+            if (empty($diff)) {
+                return $viewUser;
+            }
+        }
+
+        return false;
     }
 
     /**

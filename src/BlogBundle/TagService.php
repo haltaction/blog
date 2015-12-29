@@ -37,7 +37,7 @@ class TagService
      */
     public function getTagIds($tags)
     {
-        foreach ($tags as $key=>&$tag) {
+        foreach ($tags as $key => &$tag) {
             if (empty($key)) {
                 // skip empty tags
                 unset($tags[$key]);
@@ -73,7 +73,7 @@ class TagService
         $tagsNew = $articleNew->getTags();
         $tagsOld = $articleOld->getTags();
 
-        foreach ($tagsNew as $key=>$tag) {
+        foreach ($tagsNew as $key => $tag) {
             if (empty($key)) {
                 // skip empty tags
                 unset($tagsNew[$key]);
@@ -88,7 +88,7 @@ class TagService
             }
         }
 
-        foreach ($tagsOld as $key=>$tag) {
+        foreach ($tagsOld as $key => $tag) {
             if (empty($key)) {
                 // skip empty tags
                 continue;

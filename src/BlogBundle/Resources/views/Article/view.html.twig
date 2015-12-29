@@ -1,0 +1,12 @@
+{% extends "BlogBundle::base.html.twig" %}
+
+{% block title %}Article:view{% endblock %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+    <div>{{ article.content|raw }}</div>
+{% endblock %}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+{#{% endblock %}#}

@@ -2,7 +2,10 @@
 
 namespace BlogBundle\Controller;
 
+use BlogBundle\ArticleEvents;
+use BlogBundle\Event\FilterArticleEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -86,5 +89,24 @@ class ArticleController extends Controller
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return $this->redirect($this->generateUrl('blog_list_articles'));
+    }
+
+    public function viewAction($slug)
+    {
+        $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
+        if (!$article) {
+            throw $this->createNotFoundException();
+        }
+
+        // dispatch the article view event
+        $request = Request::createFromGlobals();
+        $user = $this->getUser();
+        $event = new FilterArticleEvent($article, $request, $user);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(ArticleEvents::ARTICLE_VIEW, $event);
+
+        return $this->render('@Blog/Article/view.html.twig', array(
+            'article' => $article
+        ));
     }
 }

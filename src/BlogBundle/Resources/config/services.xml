@@ -22,5 +22,11 @@
             <tag name="twig.extension" />
         </service>
 
+        <service id="blog.article.view_listener"
+                class="BlogBundle\EventListener\ArticleListener">
+            <tag name="kernel.event_listener" event="article.view" method="onArticleView"/>
+            <argument type="service" id="doctrine.odm.mongodb.document_manager" />
+        </service>
+
     </services>
 </container>

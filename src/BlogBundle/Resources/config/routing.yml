@@ -9,11 +9,16 @@ blog_add_article:
     methods: [GET, POST]
 
 blog_edit_article:
-    path:   /article/edit/{slug}
+    path:   /article/{slug}/edit
     defaults: { _controller: BlogBundle:Article:edit }
     methods: [GET, POST]
 
 blog_delete_article:
-    path:   /article/delete/{slug}
+    path:   /article/{slug}/delete
     defaults: { _controller: BlogBundle:Article:delete }
+    methods: [GET]
+
+blog_view_article:
+    path:   /article/{slug}
+    defaults: { _controller: BlogBundle:Article:view }
     methods: [GET]
