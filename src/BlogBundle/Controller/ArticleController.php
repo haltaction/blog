@@ -44,11 +44,7 @@ class ArticleController extends Controller
     {
         $request = Request::createFromGlobals();
         $sort = $request->get('sort');
-        if (("newest" == $sort) || empty($sort)) {
-            $articles = $this->get('blog.article.repository')->getAllArticlesByCreated();
-        } elseif ("popular" == $sort) {
-            $articles = $this->get('blog.article.repository')->getAllArticlesByViews();
-        }
+        $articles = $this->get('blog.article.repository')->getAllArticles($sort);
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
             'articles' => $articles

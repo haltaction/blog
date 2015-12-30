@@ -22,7 +22,7 @@
     {% for article in articles %}
         <li class="list-unstyled">
             <a href="/article/{{ article.slug }}">
-                <h3>{{ article.title|title }}</h3>
+                <h3>{{ article.title|capitalize }}</h3>
             </a>
             <div class="well">{{ article.content|striptags|replace({'&nbsp;': " "})|sentencesLimit(2) }}</div>
             {% if is_granted("ROLE_ADMIN") %}

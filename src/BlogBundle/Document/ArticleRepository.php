@@ -6,22 +6,24 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class ArticleRepository extends DocumentRepository
 {
-    public function getAllArticlesByCreated($limit = 10)
+    protected $map = array(
+        'newest' => 'createdAt',
+        'popular' => 'viewsNumber'
+    );
+
+    public function getAllArticles($sortBy, $limit = 10)
     {
+        $sortBy = (!empty($sortBy)) ? $sortBy : 'newest';
+
         return $this->createQueryBuilder()
-            ->sort('createdAt', 'DESC')
+            ->sort($this->sortMap($sortBy), 'DESC')
             ->limit($limit)
             ->getQuery()
             ->toArray();
     }
 
-    public function getAllArticlesByViews($limit = 10)
+    private function sortMap($sortBy)
     {
-        return $this->createQueryBuilder()
-            ->sort('viewsNumber', 'DESK')
-            ->sort('createdAt', 'DESK')
-            ->limit($limit)
-            ->getQuery()
-            ->toArray();
+        return $this->map[$sortBy];
     }
 } 

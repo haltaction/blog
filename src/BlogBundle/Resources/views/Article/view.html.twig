@@ -4,9 +4,18 @@
 
 {% block content %}
     <h1>{{ article.title }}</h1>
-    <div>{{ article.content|raw }}</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{ article.createdAt|date("d.m.Y") }}</span>
+        </div>
+        <div class="panel-body">{{ article.content|raw }}</div>
+        {% if (article.tags) %}
+            <div class="panel-footer">
+            {% for tag in article.tags|keys  %}
+                {# todo links on search by #}
+                <span class="label label-info"><a href="#">{{ tag }}</a></span>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
-
-{#{% block javascripts %}#}
-    {#{{ parent() }}#}
-{#{% endblock %}#}
