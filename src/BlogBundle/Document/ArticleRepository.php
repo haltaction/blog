@@ -6,18 +6,18 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class ArticleRepository extends DocumentRepository
 {
-    protected $map = array(
+    protected $map = [
         'newest' => 'createdAt',
-        'popular' => 'viewsNumber'
-    );
+        'popular' => 'viewsNumber',
+    ];
 
-    public function getAllArticles($sortBy, $limit = 10)
+    public function getAllArticles($sortBy, $hydrate = true)
     {
         $sortBy = (!empty($sortBy)) ? $sortBy : 'newest';
 
         return $this->createQueryBuilder()
             ->sort($this->sortMap($sortBy), 'DESC')
-            ->limit($limit)
+            ->hydrate($hydrate)
             ->getQuery()
             ->toArray();
     }
@@ -26,4 +26,4 @@ class ArticleRepository extends DocumentRepository
     {
         return $this->map[$sortBy];
     }
-} 
+}

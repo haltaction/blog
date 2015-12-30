@@ -4,10 +4,14 @@ namespace BlogBundle\Controller;
 
 use BlogBundle\ArticleEvents;
 use BlogBundle\Event\FilterArticleEvent;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
 {
@@ -45,10 +49,34 @@ class ArticleController extends Controller
         $request = Request::createFromGlobals();
         $sort = $request->get('sort');
         $articles = $this->get('blog.article.repository')->getAllArticles($sort);
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
+        $articles = $pagerfanta->getCurrentPageResults();
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
             'articles' => $articles
         ));
+    }
+
+    public function listMoreAction($page)
+    {
+        $request = Request::createFromGlobals();
+        $sort = $request->get('sort');
+
+        $articles = $this->get('blog.article.repository')->getAllArticles($sort, false);
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
+        $pagerfanta->setCurrentPage($page);
+
+        $result = [
+            'html' => $this->renderView(
+                'BlogBundle:Article:list_li.html.twig',
+                [
+                    'articles' => $pagerfanta->getCurrentPageResults()
+                ]
+            ),
+            'isNextPage' => $pagerfanta->hasNextPage()
+        ];
+
+        return JsonResponse::create($result);
     }
 
     public function editAction($slug, Request $request)

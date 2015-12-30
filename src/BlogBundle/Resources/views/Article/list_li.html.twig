@@ -1,0 +1,16 @@
+{% if (articles) %}
+    {% for article in articles %}
+        <li class="list-unstyled">
+            <h3 class="title">
+                <a href="/article/{{ article.slug }}">{{ article.title|capitalize }}</a>
+            </h3>
+            <div class="well">{{ article.content|striptags|replace({'&nbsp;': " "})|sentencesLimit(2) }}</div>
+            {% if is_granted("ROLE_ADMIN") %}
+                <div class="bs-callout bs-callout-warning admin-links">
+                    <a href="{{ path('blog_edit_article', {'slug': article.slug}) }}" class="btn btn-info btn-xs">Edit</a>
+                    <a href="{{ path('blog_delete_article', {'slug': article.slug}) }}" class="pull-right btn btn-danger btn-xs" onclick="return confirm('Are you sure?')" >Delete</a>
+                </div>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endif %}

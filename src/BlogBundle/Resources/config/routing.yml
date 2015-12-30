@@ -3,6 +3,13 @@ blog_list_articles:
     defaults: { _controller: BlogBundle:Article:list }
     methods: [GET]
 
+blog_list_more_articles:
+    path:     /article/list/{page}
+    defaults: { _controller: BlogBundle:Article:listMore, page:1 }
+    requirements:
+      page: \d+
+    methods: [GET]
+
 blog_add_article:
     path:   /article/add
     defaults: { _controller: BlogBundle:Article:add }
