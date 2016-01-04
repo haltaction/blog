@@ -29,3 +29,8 @@ blog_view_article:
     path:   /article/{slug}
     defaults: { _controller: BlogBundle:Article:view }
     methods: [GET]
+
+blog_article_add_comment:
+    path:   /article/{slug}
+    defaults: { _controller: BlogBundle:Comment:add }
+    methods: [POST]

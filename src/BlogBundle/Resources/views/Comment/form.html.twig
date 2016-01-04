@@ -1,0 +1,9 @@
+{{ form_start(commentForm, { 'method': 'POST', 'action': path('blog_article_add_comment', {'slug': slug}), 'attr': {'class': 'col-md-4'}}) }}
+{{ form_errors(commentForm) }}
+<div class="form-group row req">
+    {{ form_row(commentForm.content, {'attr': {'class': 'form-control comment-text', 'rows': '5'}}) }}
+</div>
+<div class="form-group row col-md-8 col-md-offset-2">
+    {{ form_row(commentForm.add, {'attr': {'class': 'form-control btn btn-success'}}) }}
+</div>
+{{ form_end(commentForm) }}

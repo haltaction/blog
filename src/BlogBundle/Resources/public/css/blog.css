@@ -86,3 +86,7 @@ div.admin-links {
 .hidden {
     display: none;
 }
+/* comment */
+.comment-text {
+    resize: none;
+}

@@ -2,6 +2,7 @@
 
 namespace BlogBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -62,7 +63,12 @@ class Article
      */
     protected $viewsUsers;
 
-//    protected $comments;
+    /**
+     * @MongoDB\EmbedMany(
+     *  targetDocument="BlogBundle\Document\Comment"
+     * )
+     */
+    protected $comments;
 
     /**
      * @MongoDB\Date(nullable=true)
@@ -88,6 +94,7 @@ class Article
     {
         $this->setViewsNumber(0);
         $this->viewsUsers = array();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -267,6 +274,29 @@ class Article
         }
 
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComments()
+    {
+        return $this->comments ?: $this->comments = new ArrayCollection();
+    }
+
+    /**
+     * @param array $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
     }
 
     /**
