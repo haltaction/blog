@@ -71,7 +71,7 @@ class TagService
     public function updateTagsIds(Article $articleNew, Article $articleOld)
     {
         $tagsNew = $articleNew->getTags();
-        $tagsOld = $articleOld->getTags();
+        $tagsOld = $articleOld->getTags() ?: [];
 
         foreach ($tagsNew as $key => $tag) {
             if (empty($key)) {
