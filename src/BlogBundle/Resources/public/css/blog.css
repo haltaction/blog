@@ -82,3 +82,7 @@ div.admin-links {
 .bs-callout-info h4 {
     color: #5bc0de;
 }
+/* list */
+.hidden {
+    display: none;
+}

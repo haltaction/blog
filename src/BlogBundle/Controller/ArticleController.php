@@ -53,7 +53,8 @@ class ArticleController extends Controller
         $articles = $pagerfanta->getCurrentPageResults();
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
-            'articles' => $articles
+            'articles' => $articles,
+            'isNextPage' => $pagerfanta->hasNextPage()
         ));
     }
 

@@ -8,6 +8,8 @@ use Pagerfanta\Pagerfanta;
 
 class ArticleService
 {
+    const PER_PAGE = 10;
+
     /**
      * @var ArticleRepository
      */
@@ -44,6 +46,7 @@ class ArticleService
     {
         $adapter = new ArrayAdapter($array);
         $this->pagerfanta = new Pagerfanta($adapter);
+        $this->pagerfanta->setMaxPerPage(self::PER_PAGE);
 
         return $this->pagerfanta;
     }

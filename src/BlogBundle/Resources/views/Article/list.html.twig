@@ -3,7 +3,8 @@
 {% block title %}Article:list{% endblock %}
 
 {% block header_script %}
-    <script>var ajaxurl='{{ path('blog_list_more_articles') }}';</script>
+    <script>var ajaxurl='{{ path('blog_list_more_articles') }}',
+                isNextPage={{ isNextPage ?: 0 }};</script>
 {% endblock %}
 
 {% block content %}
@@ -23,15 +24,15 @@
         {% endif %}
     </span>
 
-    <ul>
+    <ul class="articles-list">
         {% include 'BlogBundle:Article:list_li.html.twig' %}
     </ul>
     <div>
-        <button class="btn btn-primary" style="margin-left: 45%;">Show more</button>
+        <button class="btn btn-primary show-more" style="margin-left: 45%;" data-page="1">Show more</button>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {# todo add custom script for loading more articles from ajax #}
+    <script src="{{ asset('bundles/blog/js/list.js') }}"></script>
 {% endblock %}
