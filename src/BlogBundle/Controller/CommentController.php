@@ -7,6 +7,7 @@ use BlogBundle\Document\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ class CommentController extends Controller
      */
     public function addAction($slug, Request $request)
     {
+        $this->denyAccessUnlessGranted("ROLE_USER");
         $comment = new Comment();
         $form = $this->createFormBuilder($comment)
             ->add('content', TextAreaType::class, [
@@ -28,38 +30,47 @@ class CommentController extends Controller
             ])
             ->add('add', SubmitType::class)
             ->getForm();
-
+        $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $comment->setUserId($this->getUser()->getId());
-            $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
+
             $article->addComment($comment);
 
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
-            return $this->redirect($this->generateUrl('blog_view_article', $article->getSlug()));
+            return $this->redirectToRoute('blog_view_article', [
+                'slug' => $article->getSlug()
+            ]);
         }
-        // todo return if form invalid
+        // can't pass form with error through controller, so for errors render other form, extended article view
+        return $this->render('BlogBundle:Comment:form_error.html.twig', [
+            'article' => $article,
+            'commentForm' => $form->createView()
+        ]);
     }
 
     /**
      * @param Article $article
+     * @param Form $form
      *
      * @return Response
      */
-    public function commentFormAction($article)
+    public function commentFormAction($article, Form $form = null)
     {
-        $comment = new Comment();
-        $form = $this->createFormBuilder($comment)
-            ->add('content', TextAreaType::class, [
-                'required' => false,
-                'label' => 'Comment'
-            ])
-            ->add('add', SubmitType::class)
-            ->getForm();
+        if (empty($form)) {
+            $comment = new Comment();
+            $form = $this->createFormBuilder($comment)
+                ->add('content', TextAreaType::class, [
+                    'required' => false,
+                    'label' => 'Comment'
+                ])
+                ->add('add', SubmitType::class)
+                ->getForm();
+        }
 
         return $this->render('BlogBundle:Comment:form.html.twig', [
             'slug' => $article->getSlug(),

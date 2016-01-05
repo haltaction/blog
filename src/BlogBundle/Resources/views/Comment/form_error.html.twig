@@ -1,0 +1,6 @@
+{% extends 'BlogBundle:Article:view.html.twig' %}
+
+{% block comment_form %}
+    {% set slug = article.slug %}
+    {{ include('BlogBundle:Comment:form.html.twig') }}
+{% endblock %}

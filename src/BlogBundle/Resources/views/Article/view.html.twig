@@ -18,7 +18,9 @@
             </div>
         {% endif %}
     </div>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {{ render(controller('BlogBundle:Comment:commentForm', {'article': article })) }}
-    {% endif %}
+    {% block comment_form %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and commentForm is not defined %}
+            {{ render(controller('BlogBundle:Comment:commentForm', {'article': article })) }}
+        {% endif %}
+    {% endblock %}
 {% endblock %}
