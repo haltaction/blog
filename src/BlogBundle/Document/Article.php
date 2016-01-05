@@ -281,7 +281,8 @@ class Article
      */
     public function getComments()
     {
-        return $this->comments ?: $this->comments = new ArrayCollection();
+        $comments = $this->comments ?: $this->comments = new ArrayCollection();
+        return $comments->toArray();
     }
 
     /**

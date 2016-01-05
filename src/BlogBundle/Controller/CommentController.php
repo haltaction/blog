@@ -34,9 +34,9 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+//            todo move to service
             $comment->setUserId($this->getUser()->getId());
-
+            $comment->setUserName($this->getUser()->getUsername());
             $article->addComment($comment);
 
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);

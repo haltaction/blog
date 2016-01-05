@@ -25,6 +25,11 @@ class Comment
     protected $userId;
 
     /**
+     * @MongoDB\String()
+     */
+    protected $userName;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=1000)
      * @Assert\Regex("/^[\w\d\p{L} .,-]*$/u",
@@ -71,6 +76,22 @@ class Comment
     public function setUserId($userId)
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+
+    /**
+     * @param mixed $userName
+     */
+    public function setUserName($userName)
+    {
+        $this->userName = $userName;
     }
 
     /**

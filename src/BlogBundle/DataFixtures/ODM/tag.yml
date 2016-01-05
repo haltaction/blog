@@ -1,9 +1,7 @@
 BlogBundle\Document\Tag:
-#    tag{1..12}:
     tag1:
         name: <word()>
-        numberArticles: 12
-#    tag2{1..12}:
+        numberArticles: 30
     tag2:
         name: <word()>
-        numberArticles: 12
+        numberArticles: 30
