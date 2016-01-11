@@ -1,0 +1,19 @@
+#UserBundle\Document\User:
+#    user3:
+#        username: <firstNameMale()>
+#        email: user3@mail.com
+#        plainPassword: qwerty
+#        enabled: true
+#        roles: [ROLE_USER]
+#
+# add order numbers for fixtures
+
+BlogBundle\Document\Comment:
+    comment1_{1..30}:
+        userId: '@user1->id'
+        userName: '@user1->username'
+        content: <realText($maxNbChars = 200)>
+    comment2_{1..30}:
+        userId: '@user2->id'
+        userName: '@user2->username'
+        content: <text($maxNbChars = 800)>
