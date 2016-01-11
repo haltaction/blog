@@ -2,6 +2,11 @@
 
 {% block title %}Article:view{% endblock %}
 
+{% block header_script %}
+    <script>var ajaxurl='{{ path('blog_list_more_comments', {'slug': article.slug }) }}',
+                isNextPage={{ isNextPage|default(false) ?: 0 }};</script>
+{% endblock %}
+
 {% block content %}
     <h1>{{ article.title }}</h1>
     <div class="row panel panel-default">
@@ -28,15 +33,17 @@
 
     <div class="row">
         {% block comment_list %}
-            {% if article.comments is not empty %}
-                {% for comment in article.comments %}
-                    <ul class="list-group">
-                    {% include('BlogBundle:Comment:list_li.html.twig') %}
-                    </ul>
-                {% endfor %}
-            {% else %}
-                <span>No comments</span>
-            {% endif %}
+            <ul class="list-group comments-list">
+                {% include('BlogBundle:Comment:list_li.html.twig') %}
+            </ul>
+            <div>
+                <button class="btn btn-primary show-more" style="margin-left: 45%;" data-page="1">Show more</button>
+            </div>
         {% endblock %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/blog/js/comment-list.js') }}"></script>
 {% endblock %}

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,9 +115,16 @@ class CommentController extends Controller
                 'slug' => $article->getSlug(),
             ]);
         }
+
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($article->getComments());
+        $comments = $pagerfanta->getCurrentPageResults();
+
         // can't pass form with error through controller, so for errors render other form, extended article view
         return $this->render('BlogBundle:Comment:form_error.html.twig', [
             'article' => $article,
+            'comments' => $comments,
+            'isNextPage' => $pagerfanta->hasNextPage(),
+            'comment_id' => $comment_id,
             'commentForm' => $form->createView(),
         ]);
     }
@@ -136,5 +144,25 @@ class CommentController extends Controller
         return $this->redirectToRoute('blog_view_article', [
             'slug' => $article->getSlug(),
         ]);
+    }
+
+    public function listMoreAction($slug, $page)
+    {
+        $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($article->getComments());
+        $pagerfanta->setCurrentPage($page);
+
+        $result = [
+            'html' => $this->renderView(
+                'BlogBundle:Comment:list_li.html.twig',
+                [
+                    'article' => $article,
+                    'comments' => $pagerfanta->getCurrentPageResults(),
+                ]
+            ),
+            'isNextPage' => $pagerfanta->hasNextPage(),
+        ];
+
+        return JsonResponse::create($result);
     }
 }

@@ -3,4 +3,4 @@ BlogBundle\Document\Article:
         title: <sentence($nbWords = 3)>
         content: <text($maxNbChars = 800)>
         tags: <mongoHash([@tag1, @tag2])>
-        comments: [@comment1_<current()>, @comment2_<current()>, @comment2_*, @comment1_*]
+        comments: 25x @comment_*

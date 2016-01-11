@@ -44,3 +44,10 @@ blog_article_delete_comment:
     path: /article/{slug}/{comment_id}/delete
     defaults: { _controller: BlogBundle:Comment:delete }
     methods: [GET]
+
+blog_list_more_comments:
+    path:     /article/{slug}/list/{page}
+    defaults: { _controller: BlogBundle:Comment:listMore, page:1 }
+    requirements:
+      page: \d+
+    methods: [GET]

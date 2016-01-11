@@ -132,8 +132,13 @@ class ArticleController extends Controller
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(ArticleEvents::ARTICLE_VIEW, $event);
 
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($article->getComments());
+        $comments = $pagerfanta->getCurrentPageResults();
+
         return $this->render('@Blog/Article/view.html.twig', array(
-            'article' => $article
+            'article' => $article,
+            'comments' => $comments,
+            'isNextPage' => $pagerfanta->hasNextPage(),
         ));
     }
 }
