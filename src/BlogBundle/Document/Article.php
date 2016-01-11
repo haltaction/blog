@@ -296,15 +296,33 @@ class Article
 
     /**
      * @param Comment $comment
+     *
      * @return $this
      */
     public function addComment(Comment $comment)
     {
-        $this->comments[] = $comment;
+        $this->comments->add($comment);
 
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     *
+     * @return $this
+     */
+    public function deleteComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+
+        return $this;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return bool|Comment
+     */
     public function findComment($id)
     {
         foreach ($this->comments as $comment) {

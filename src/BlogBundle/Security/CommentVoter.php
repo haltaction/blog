@@ -23,7 +23,7 @@ class CommentVoter extends Voter
      * Determines if the attribute and subject are supported by this voter.
      *
      * @param string $attribute An attribute
-     * @param mixed $subject The subject to secure, e.g. an object the user wants to access or any other PHP type
+     * @param mixed  $subject   The subject to secure, e.g. an object the user wants to access or any other PHP type
      *
      * @return bool True if the attribute and subject are supported, false otherwise
      */
@@ -41,9 +41,10 @@ class CommentVoter extends Voter
     }
 
     /**
-     * @param string $attribute
-     * @param mixed $subject
+     * @param string         $attribute
+     * @param mixed          $subject
      * @param TokenInterface $token
+     *
      * @return bool
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -56,12 +57,12 @@ class CommentVoter extends Voter
         }
         $comment = $subject;
 
-        switch($attribute) {
+        switch ($attribute) {
             case self::EDIT:
                 if ($user->getId() === $comment->getUserId()) {
                     return true;
                 }
-                if ($this->decisionManager->decide($token, ["ROLE_ADMIN"])) {
+                if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
                     return true;
                 }
         }

@@ -18,11 +18,12 @@ class CommentController extends Controller
     /**
      * @param $slug string
      * @param Request $request
+     *
      * @return RedirectResponse
      */
     public function addAction($slug, Request $request)
     {
-        $this->denyAccessUnlessGranted("ROLE_USER");
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $comment = new Comment();
         $form = $this->createFormBuilder($comment)
             ->setMethod('POST')
@@ -31,7 +32,7 @@ class CommentController extends Controller
             ]))
             ->add('content', TextAreaType::class, [
                 'required' => false,
-                'label' => 'Comment'
+                'label' => 'Comment',
             ])
             ->add('add', SubmitType::class)
             ->getForm();
@@ -39,7 +40,7 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            todo move to service
+            //            todo move to service
             $comment->setUserId($this->getUser()->getId());
             $comment->setUserName($this->getUser()->getUsername());
             $article->addComment($comment);
@@ -48,19 +49,19 @@ class CommentController extends Controller
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
             return $this->redirectToRoute('blog_view_article', [
-                'slug' => $article->getSlug()
+                'slug' => $article->getSlug(),
             ]);
         }
         // can't pass form with error through controller, so for errors render other form, extended article view
         return $this->render('BlogBundle:Comment:form_error.html.twig', [
             'article' => $article,
-            'commentForm' => $form->createView()
+            'commentForm' => $form->createView(),
         ]);
     }
 
     /**
      * @param Article $article
-     * @param Form $form
+     * @param Form    $form
      *
      * @return Response
      */
@@ -71,7 +72,7 @@ class CommentController extends Controller
             $form = $this->createFormBuilder($comment)
                 ->add('content', TextAreaType::class, [
                     'required' => false,
-                    'label' => 'Comment'
+                    'label' => 'Comment',
                 ])
                 ->add('add', SubmitType::class)
                 ->getForm();
@@ -79,14 +80,13 @@ class CommentController extends Controller
 
         return $this->render('BlogBundle:Comment:form.html.twig', [
             'slug' => $article->getSlug(),
-            'commentForm' => $form->createView()
+            'commentForm' => $form->createView(),
         ]);
     }
 
     public function editAction($slug, $comment_id, Request $request)
     {
-        $this->denyAccessUnlessGranted("ROLE_USER");
-        //check comment id and user id
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
         $comment = $article->findComment($comment_id);
         if (!$this->isGranted('edit', $comment)) {
@@ -96,11 +96,11 @@ class CommentController extends Controller
             ->setMethod('POST')
             ->setAction($this->generateUrl('blog_article_edit_comment', [
                 'slug' => $slug,
-                'comment_id' => $comment_id
+                'comment_id' => $comment_id,
             ]))
             ->add('content', TextAreaType::class, [
                 'required' => false,
-                'label' => 'Comment'
+                'label' => 'Comment',
             ])
             ->add('edit', SubmitType::class)
             ->getForm();
@@ -111,16 +111,30 @@ class CommentController extends Controller
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
             return $this->redirectToRoute('blog_view_article', [
-                'slug' => $article->getSlug()
+                'slug' => $article->getSlug(),
             ]);
         }
         // can't pass form with error through controller, so for errors render other form, extended article view
         return $this->render('BlogBundle:Comment:form_error.html.twig', [
             'article' => $article,
-            'commentForm' => $form->createView()
+            'commentForm' => $form->createView(),
         ]);
     }
 
-    public function deleteAction()
-    {}
-} 
+    public function deleteAction($slug, $comment_id, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
+        $comment = $article->findComment($comment_id);
+        if (!$this->isGranted('edit', $comment)) {
+            throw new AccessDeniedException();
+        }
+        $article->deleteComment($comment);
+        $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return $this->redirectToRoute('blog_view_article', [
+            'slug' => $article->getSlug(),
+        ]);
+    }
+}
