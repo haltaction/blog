@@ -282,6 +282,7 @@ class Article
     public function getComments()
     {
         $comments = $this->comments ?: $this->comments = new ArrayCollection();
+
         return $comments->toArray();
     }
 

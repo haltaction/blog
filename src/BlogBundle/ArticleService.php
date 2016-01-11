@@ -50,28 +50,4 @@ class ArticleService
 
         return $this->pagerfanta;
     }
-
-//    /**
-//     * @param $articles array
-//     *
-//     * @return array
-//     */
-//    public function filteredArticlesFields($articles)
-//    {
-//        $articlesArray = [];
-//        foreach ($articles as $article) {
-//            $articlesArray[] = array_intersect_key($article, $this->neededKeys);
-//        }
-//
-//        return $articlesArray;
-//    }
-
-//    public function getArticlesByPage($page, $sortBy)
-//    {
-//        $articles = $this->articleRepository->getAllArticles($sortBy);
-//        $this->getPagerfantaByArray($articles);
-//        $this->pagerfanta->setCurrentPage($page);
-//
-//        return $this->pagerfanta->getCurrentPageResults();
-//    }
 }

@@ -19,6 +19,7 @@ class Tag
 
     /**
      * @MongoDB\String()
+     * @MongoDB\Index(unique=true)
      */
     protected $name;
 

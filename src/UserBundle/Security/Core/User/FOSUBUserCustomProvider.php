@@ -79,12 +79,6 @@ class FOSUBUserCustomProvider extends BaseClass
 
         $property = $this->getProperty($response);
 
-        // Symfony <2.5 BC
-        if (method_exists($this->accessor, 'isWritable') && !$this->accessor->isWritable($user, $property)
-            || !method_exists($this->accessor, 'isWritable') && !method_exists($user, 'set'.ucfirst($property))) {
-            throw new \RuntimeException(sprintf("Class '%s' must have defined setter method for property: '%s'.", get_class($user), $property));
-        }
-
         $username = $response->getUsername();
 
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
