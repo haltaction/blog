@@ -33,5 +33,11 @@
             <argument type="service" id="blog.article.repository"/>
         </service>
 
+        <service id="app.comment_voter"
+                 class="BlogBundle\Security\CommentVoter"
+                 public="false">
+            <argument type="service" id="security.access.decision_manager"/>
+            <tag name="security.voter" />
+                 </service>
     </services>
 </container>

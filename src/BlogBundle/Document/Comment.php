@@ -2,7 +2,6 @@
 
 namespace BlogBundle\Document;
 
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -32,13 +31,19 @@ class Comment
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=1000)
-     * @Assert\Regex("/^[\w\d\p{L} .,-]*$/u",
+     * @Assert\Regex("/^[\w\d\p{L} .,!?:;-«»—]*$/u",
      *      message="Special characters not allowed"
      * )
      *
      * @MongoDB\String()
      */
     protected $content;
+
+    /**
+     * @MongoDB\Timestamp()
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $createdAt;
 
     /**
      * @MongoDB\Timestamp()
@@ -109,4 +114,36 @@ class Comment
     {
         $this->content = $content;
     }
-} 
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+}

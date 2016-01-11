@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ article.title }}</h1>
-    <div class="panel panel-default">
+    <div class="row panel panel-default">
         <div class="panel-heading">
             <span>{{ article.createdAt|date("d.m.Y") }}</span>
         </div>
@@ -18,9 +18,25 @@
             </div>
         {% endif %}
     </div>
-    {% block comment_form %}
-        {% if is_granted('IS_AUTHENTICATED_FULLY') and commentForm is not defined %}
-            {{ render(controller('BlogBundle:Comment:commentForm', {'article': article })) }}
-        {% endif %}
-    {% endblock %}
+    <div class="row">
+        {% block comment_form %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and commentForm is not defined %}
+                {{ render(controller('BlogBundle:Comment:commentForm', {'article': article })) }}
+            {% endif %}
+        {% endblock %}
+    </div>
+
+    <div class="row">
+        {% block comment_list %}
+            {% if article.comments is not empty %}
+                {% for comment in article.comments %}
+                    <ul class="list-group">
+                    {% include('BlogBundle:Comment:list_li.html.twig') %}
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <span>No comments</span>
+            {% endif %}
+        {% endblock %}
+    </div>
 {% endblock %}

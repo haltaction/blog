@@ -294,11 +294,26 @@ class Article
         $this->comments = $comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment)
     {
         $this->comments[] = $comment;
 
         return $this;
+    }
+
+    public function findComment($id)
+    {
+        foreach ($this->comments as $comment) {
+            if ($id == $comment->getId()) {
+                return $comment;
+            }
+        }
+
+        return false;
     }
 
     /**

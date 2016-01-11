@@ -26,7 +26,7 @@ footer {
     line-height: 2.00;
     border-radius: 70px;
 }
-div.admin-links {
+.articles-list div.admin-links {
     margin-top: -10px;
 }
 /* bootsrtap component callout */
@@ -89,4 +89,8 @@ div.admin-links {
 /* comment */
 .comment-text {
     resize: none;
+}
+.username {
+    font-size: 18px;
+    display: block;
 }

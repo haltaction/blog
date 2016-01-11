@@ -11,6 +11,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CommentController extends Controller
 {
@@ -24,6 +25,10 @@ class CommentController extends Controller
         $this->denyAccessUnlessGranted("ROLE_USER");
         $comment = new Comment();
         $form = $this->createFormBuilder($comment)
+            ->setMethod('POST')
+            ->setAction($this->generateUrl('blog_article_add_comment', [
+                'slug' => $slug,
+            ]))
             ->add('content', TextAreaType::class, [
                 'required' => false,
                 'label' => 'Comment'
@@ -77,4 +82,45 @@ class CommentController extends Controller
             'commentForm' => $form->createView()
         ]);
     }
+
+    public function editAction($slug, $comment_id, Request $request)
+    {
+        $this->denyAccessUnlessGranted("ROLE_USER");
+        //check comment id and user id
+        $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
+        $comment = $article->findComment($comment_id);
+        if (!$this->isGranted('edit', $comment)) {
+            throw new AccessDeniedException();
+        }
+        $form = $this->createFormBuilder($comment)
+            ->setMethod('POST')
+            ->setAction($this->generateUrl('blog_article_edit_comment', [
+                'slug' => $slug,
+                'comment_id' => $comment_id
+            ]))
+            ->add('content', TextAreaType::class, [
+                'required' => false,
+                'label' => 'Comment'
+            ])
+            ->add('edit', SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('doctrine.odm.mongodb.document_manager')->persist($comment);
+            $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+            return $this->redirectToRoute('blog_view_article', [
+                'slug' => $article->getSlug()
+            ]);
+        }
+        // can't pass form with error through controller, so for errors render other form, extended article view
+        return $this->render('BlogBundle:Comment:form_error.html.twig', [
+            'article' => $article,
+            'commentForm' => $form->createView()
+        ]);
+    }
+
+    public function deleteAction()
+    {}
 } 
