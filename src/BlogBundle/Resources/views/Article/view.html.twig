@@ -23,6 +23,12 @@
             </div>
         {% endif %}
     </div>
+    {% if is_granted("ROLE_ADMIN") %}
+        <div class="row bs-callout bs-callout-warning admin-links">
+            <a href="{{ path('blog_edit_article', {'slug': article.slug}) }}" class="btn btn-info btn-xs">Edit</a>
+            <a href="{{ path('blog_delete_article', {'slug': article.slug}) }}" class="pull-right btn btn-danger btn-xs" onclick="return confirm('Are you sure?')" >Delete</a>
+        </div>
+    {% endif %}
     <div class="row">
         {% block comment_form %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') and commentForm is not defined %}

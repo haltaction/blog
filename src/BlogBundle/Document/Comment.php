@@ -31,8 +31,9 @@ class Comment
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=1000)
-     * @Assert\Regex("/^[\w\d\p{L} .,!?:;-«»—]*$/u",
-     *      message="Special characters not allowed"
+     * @Assert\Regex("/[<>\[\]{}@#%*&;]+/u",
+     *      message="Special characters not allowed",
+     *      match=false
      * )
      *
      * @MongoDB\String()

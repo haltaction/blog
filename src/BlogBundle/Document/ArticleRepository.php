@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 class ArticleRepository extends DocumentRepository
 {
     protected $map = [
-        'newest' => 'createdAt',
+        'newest' => 'updatedAt',
         'popular' => 'viewsNumber',
     ];
 

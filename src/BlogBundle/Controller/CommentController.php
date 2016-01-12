@@ -53,9 +53,15 @@ class CommentController extends Controller
                 'slug' => $article->getSlug(),
             ]);
         }
+
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($article->getComments());
+        $comments = $pagerfanta->getCurrentPageResults();
+
         // can't pass form with error through controller, so for errors render other form, extended article view
         return $this->render('BlogBundle:Comment:form_error.html.twig', [
             'article' => $article,
+            'comments' => $comments,
+            'isNextPage' => $pagerfanta->hasNextPage(),
             'commentForm' => $form->createView(),
         ]);
     }
