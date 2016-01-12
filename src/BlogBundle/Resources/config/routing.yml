@@ -51,3 +51,8 @@ blog_list_more_comments:
     requirements:
       page: \d+
     methods: [GET]
+
+blog_search:
+    path: /search
+    defaults: { _controller: BlogBundle:Article:search }
+    methods: [GET]

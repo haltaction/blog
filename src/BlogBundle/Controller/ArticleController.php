@@ -58,8 +58,14 @@ class ArticleController extends Controller
     {
         $request = Request::createFromGlobals();
         $sort = $request->get('sort');
+        $search = $request->get('s');
 
-        $articles = $this->get('blog.article.repository')->getAllArticles($sort, false);
+        if (!empty($sort)) {
+            $articles = $this->get('blog.article.repository')->getAllArticles($sort, false);
+        } elseif (!empty($search)) {
+            $articles = $this->get('blog.article.repository')->findAllArticles($search);
+        }
+
         $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
         $pagerfanta->setCurrentPage($page);
 
@@ -139,6 +145,20 @@ class ArticleController extends Controller
             'article' => $article,
             'comments' => $comments,
             'isNextPage' => $pagerfanta->hasNextPage(),
+        ));
+    }
+
+    public function searchAction(Request $request)
+    {
+        $search = $request->query->get("s");
+        $articles = $this->get('blog.article.repository')->findAllArticles($search);
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
+        $articles = $pagerfanta->getCurrentPageResults();
+
+        return $this->render('BlogBundle:Article:search_list.html.twig', array(
+            'search' => $search,
+            'articles' => $articles,
+            'isNextPage' => $pagerfanta->hasNextPage()
         ));
     }
 }

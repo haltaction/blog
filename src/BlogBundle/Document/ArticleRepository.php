@@ -26,4 +26,25 @@ class ArticleRepository extends DocumentRepository
     {
         return $this->map[$sortBy];
     }
+
+    /**
+     * @param $search
+     * @return array
+     */
+    public function findAllArticles($search)
+    {
+        $query = $this->createQueryBuilder();
+
+        $query
+            ->addOr(
+                $query->expr()->field('content')->equals(new \MongoRegex("/.*$search.*/i"))
+            )->addOr(
+                $query->expr()->field('tags.'.$search)->exists(true)
+            )->addOr(
+                $query->expr()->field('title')->equals(new \MongoRegex("/.*$search.*/i"))
+            )->sort('updatedAt', 'desc')
+        ;
+
+        return $query->getQuery()->toArray();
+    }
 }

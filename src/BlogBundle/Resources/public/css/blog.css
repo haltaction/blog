@@ -94,3 +94,8 @@ footer {
     font-size: 18px;
     display: block;
 }
+/* search form */
+.search-form div{
+    display: inline-block;
+    padding-top: 12px;
+}

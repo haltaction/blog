@@ -1,0 +1,7 @@
+<div class="search-form">
+    {#{{ form(searchForm) }}#}
+    {{ form_start(searchForm) }}
+        <input type="text" name="s"/>
+        {{ form_row(searchForm.search) }}
+    {{ form_end(searchForm) }}
+</div>

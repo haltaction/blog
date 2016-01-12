@@ -12,6 +12,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *  collection="Articles",
  *  repositoryClass="BlogBundle\Document\ArticleRepository"
  * )
+ * @MongoDB\Indexes(
+ *  @MongoDB\Index(keys={"title"="asc"}),
+ *  @MongoDB\Index(keys={"content"="asc"}),
+ * )
  * @Gedmo\SoftDeleteable(
  *   fieldName="deletedAt"
  * )
