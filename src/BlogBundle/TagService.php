@@ -114,9 +114,9 @@ class TagService
 
     public function getTagsWithWeigh($tags)
     {
-        $max = max(array_column($tags, "numberArticles"));
+        $max = max(array_column($tags, 'numberArticles'));
 
-        foreach ($tags as $key=>&$tag) {
+        foreach ($tags as $key => &$tag) {
             if (1 > $tag['numberArticles']) {
                 unset($tags[$key]);
             }

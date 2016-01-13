@@ -14,25 +14,26 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', TextType::class, array(
-            'required' => false
+            'required' => false,
         ));
         $builder->add('content', TextareaType::class, array(
-            'required' => false
+            'required' => false,
         ));
         $builder->add('tags', TextType::class, array(
-            'required' => false
+            'required' => false,
         ));
 
         $builder->get('tags')
             ->addModelTransformer(new CallbackTransformer(
                 // from Document to form element
                 function ($mongoHash) {
-                    return ($mongoHash) ? implode(",", array_keys($mongoHash)) : null;
+                    return ($mongoHash) ? implode(',', array_keys($mongoHash)) : null;
                 },
                 // from form element to mongo Hash with empty values(Tag ids)
                 function ($tagsString) {
                     $tags = explode(',', $tagsString);
                     $tags = array_map('trim', $tags);
+                    $tags = str_replace('.', '', $tags);
                     $tags = array_unique($tags);
                     $tags = array_fill_keys($tags, '');
 
@@ -44,7 +45,7 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BlogBundle\Document\Article'
+            'data_class' => 'BlogBundle\Document\Article',
         ));
     }
 
