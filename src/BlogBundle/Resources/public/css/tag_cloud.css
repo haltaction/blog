@@ -1,0 +1,40 @@
+.size10 {
+    color: #000;
+    font-size: 30px;
+}
+.size9 {
+    color: #111;
+    font-size: 28px;
+}
+.size8 {
+    color: #222;
+    font-size: 26px;
+}
+.size7 {
+    color: #333;
+    font-size: 24px;
+}
+.size6 {
+    color: #444;
+    font-size: 22px;
+}
+.size5 {
+    color: #555;
+    font-size: 20px;
+}
+.size4 {
+    color: #666;
+    font-size: 18px;
+}
+.size3 {
+    color: #777;
+    font-size: 16px;
+}
+.size2 {
+    color: #888;
+    font-size: 14px;
+}
+.size1 {
+    color: #999;
+    font-size: 12px;
+}

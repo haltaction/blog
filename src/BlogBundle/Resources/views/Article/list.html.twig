@@ -8,28 +8,35 @@
 {% endblock %}
 
 {% block content %}
-<h1>Список статтей</h1>
-    <span>Статьи отсортированы:
-        {% set sort = app.request.get('sort') %}
-        {% if (("newest" == sort) or (sort is empty)) %}
-            По новизне
-        {% else %}
-            <a href="{{ path('blog_list_articles') }}?sort=newest">По новизне</a>
-        {% endif %}
-            /
-        {% if ("popular" == sort) %}
-            По количеству просмотров
-        {% else %}
-            <a href="{{ path('blog_list_articles') }}?sort=popular">По количеству просмотров</a>
-        {% endif %}
-    </span>
+<div class="col-lg-8">
+    <h1>Список статтей</h1>
+        <span>Статьи отсортированы:
+            {% set sort = app.request.get('sort') %}
+            {% if (("newest" == sort) or (sort is empty)) %}
+                По новизне
+            {% else %}
+                <a href="{{ path('blog_list_articles') }}?sort=newest">По новизне</a>
+            {% endif %}
+                /
+            {% if ("popular" == sort) %}
+                По количеству просмотров
+            {% else %}
+                <a href="{{ path('blog_list_articles') }}?sort=popular">По количеству просмотров</a>
+            {% endif %}
+        </span>
 
-    <ul class="articles-list">
-        {% include 'BlogBundle:Article:list_li.html.twig' %}
-    </ul>
-    <div>
-        <button class="btn btn-primary show-more" style="margin-left: 45%;" data-page="1">Show more</button>
-    </div>
+        <ul class="articles-list">
+            {% include 'BlogBundle:Article:list_li.html.twig' %}
+        </ul>
+        <div>
+            <button class="btn btn-primary show-more" style="margin-left: 45%;" data-page="1">Show more</button>
+        </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+    {# search form #}
+    {{ render(controller('BlogBundle:Base:tagCloud')) }}
 {% endblock %}
 
 {% block javascripts %}

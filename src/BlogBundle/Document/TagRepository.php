@@ -13,4 +13,12 @@ class TagRepository extends DocumentRepository
 
         return $query->getQuery()->getSingleResult();
     }
+
+    public function getAllTags()
+    {
+        return $this->createQueryBuilder()
+            ->hydrate(false)
+            ->getQuery()
+            ->toArray();
+    }
 }

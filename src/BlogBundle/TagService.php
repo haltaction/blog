@@ -111,4 +111,19 @@ class TagService
             $this->documentManager->persist($tagDocument);
         }
     }
+
+    public function getTagsWithWeigh($tags)
+    {
+        $max = max(array_column($tags, "numberArticles"));
+
+        foreach ($tags as $key=>&$tag) {
+            if (1 > $tag['numberArticles']) {
+                unset($tags[$key]);
+            }
+            $percent = ($tag['numberArticles'] / $max) * 100;
+            $tag['weight'] = ceil($percent / 10);
+        }
+
+        return $tags;
+    }
 }

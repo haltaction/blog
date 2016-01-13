@@ -1,0 +1,10 @@
+<div class="well tags-cloud">
+    <h3>Облако тэгов</h3>
+    {% for tag in tag_cloud %}
+        <span class="tag size{{ tag.weight }}"><a href="{{ path('blog_search', {'type': 'tag', 's': tag.name }) }}">{{ tag.name }}</a></span>
+        {% if not loop.last %}
+            &nbsp;
+        {% endif %}
+    {% endfor %}
+</div>
+<link href="{{ asset('bundles/blog/css/tag_cloud.css') }}" rel="stylesheet">

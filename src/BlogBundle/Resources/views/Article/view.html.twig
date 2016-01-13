@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="col-lg-8">
     <h1>{{ article.title }}</h1>
     <div class="row panel panel-default">
         <div class="panel-heading">
@@ -46,6 +47,12 @@
             </div>
         {% endblock %}
     </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+    {# search form #}
+    {{ render(controller('BlogBundle:Base:tagCloud')) }}
 {% endblock %}
 
 {% block javascripts %}

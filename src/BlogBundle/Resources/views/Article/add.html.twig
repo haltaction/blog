@@ -20,6 +20,11 @@
     {{ form_end(form) }}
 {% endblock %}
 
+{% block sidebar %}
+    {# search form #}
+    {{ render(controller('BlogBundle:Base:tagCloud')) }}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ tinymce_init({

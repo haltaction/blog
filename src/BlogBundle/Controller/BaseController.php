@@ -25,4 +25,15 @@ class BaseController extends Controller
             'searchForm' => $form->createView(),
         ]);
     }
+
+    public function tagCloudAction()
+    {
+        $tags = $this->get('blog.tag.repository')->getAllTags();
+
+        $tagsWithWeight = $this->get('blog.tag')->getTagsWithWeigh($tags);
+
+        return $this->render('BlogBundle:Tag:tag_cloud.html.twig', [
+            'tag_cloud' => $tagsWithWeight
+        ]);
+    }
 }

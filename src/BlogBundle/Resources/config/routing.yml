@@ -56,3 +56,8 @@ blog_search:
     path: /search
     defaults: { _controller: BlogBundle:Article:search }
     methods: [GET]
+
+blog_tags_cloud:
+    path: /tagscloud
+    defaults: { _controller: BlogBundle:Base:tagCloud }
+    methods: [GET]
