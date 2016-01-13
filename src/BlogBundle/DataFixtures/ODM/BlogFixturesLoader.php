@@ -19,6 +19,7 @@ class BlogFixturesLoader extends AbstractLoader implements DependentFixtureInter
             __DIR__.'/tag.yml',
             __DIR__.'/comment.yml',
             __DIR__.'/article.yml',
+            __DIR__.'/page.yml',
         ];
     }
 

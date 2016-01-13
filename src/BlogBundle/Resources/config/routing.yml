@@ -61,3 +61,8 @@ blog_tags_cloud:
     path: /tagscloud
     defaults: { _controller: BlogBundle:Base:tagCloud }
     methods: [GET]
+
+blog_page_view:
+    path: /page/{slug}
+    defaults: { _controller: BlogBundle:Page:showPage }
+    methods: [GET]

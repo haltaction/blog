@@ -99,3 +99,12 @@ footer {
     display: inline-block;
     padding-top: 12px;
 }
+/* page */
+.leftimg {
+    float:left;
+    margin: 7px 7px 7px 0;
+}
+.rightimg  {
+    float: right;
+    margin: 7px 0 7px 7px;
+}
