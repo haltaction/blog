@@ -11,6 +11,11 @@ class ArticleRepository extends DocumentRepository
         'popular' => 'viewsNumber',
     ];
 
+    /**
+     * @param $sortBy
+     * @param bool $hydrate
+     * @return array
+     */
     public function getAllArticles($sortBy, $hydrate = true)
     {
         $sortBy = (!empty($sortBy)) ? $sortBy : 'newest';
@@ -46,5 +51,18 @@ class ArticleRepository extends DocumentRepository
         ;
 
         return $query->getQuery()->toArray();
+    }
+
+    /**
+     * @param $tag
+     * @return array
+     */
+    public function findArticlesByTag($tag)
+    {
+        return $this->createQueryBuilder()
+            ->field('tags.'.$tag)->exists(true)
+            ->sort('updatedAt', 'desc')
+            ->getQuery()
+            ->toArray();
     }
 }

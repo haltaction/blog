@@ -17,8 +17,7 @@
         {% if (article.tags) %}
             <div class="panel-footer">
             {% for tag in article.tags|keys  %}
-                {# todo links on search by #}
-                <span class="label label-info"><a href="#">{{ tag }}</a></span>
+                <span class="label label-info"><a href="{{ path('blog_search', {'type': 'tag', 's': tag }) }}">{{ tag }}</a></span>
             {% endfor %}
             </div>
         {% endif %}

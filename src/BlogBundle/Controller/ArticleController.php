@@ -13,7 +13,7 @@ class ArticleController extends Controller
 {
     public function addAction(Request $request)
     {
-//        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
         $form = $this->get('form.factory')
             ->createBuilder($this->get('blog.form.type.article'))
@@ -50,7 +50,7 @@ class ArticleController extends Controller
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
             'articles' => $articles,
-            'isNextPage' => $pagerfanta->hasNextPage()
+            'isNextPage' => $pagerfanta->hasNextPage(),
         ));
     }
 
@@ -59,11 +59,17 @@ class ArticleController extends Controller
         $request = Request::createFromGlobals();
         $sort = $request->get('sort');
         $search = $request->get('s');
+        $type = $request->query->get('type');
 
-        if (!empty($sort)) {
-            $articles = $this->get('blog.article.repository')->getAllArticles($sort, false);
+        if ('tag' === $type) {
+            // load articles in search by tag
+            $articles = $this->get('blog.article.repository')->findArticlesByTag($search);
         } elseif (!empty($search)) {
+            // load articles in global search
             $articles = $this->get('blog.article.repository')->findAllArticles($search);
+        } else {
+            // load all articles on main page
+            $articles = $this->get('blog.article.repository')->getAllArticles($sort, false);
         }
 
         $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
@@ -73,10 +79,10 @@ class ArticleController extends Controller
             'html' => $this->renderView(
                 'BlogBundle:Article:list_li.html.twig',
                 [
-                    'articles' => $pagerfanta->getCurrentPageResults()
+                    'articles' => $pagerfanta->getCurrentPageResults(),
                 ]
             ),
-            'isNextPage' => $pagerfanta->hasNextPage()
+            'isNextPage' => $pagerfanta->hasNextPage(),
         ];
 
         return JsonResponse::create($result);
@@ -84,14 +90,13 @@ class ArticleController extends Controller
 
     public function editAction($slug, Request $request)
     {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
         $articleOld = clone $article;
 
-
         $form = $this->createForm($this->get('blog.form.type.article'), $article)
-            ->add('save', SubmitType::class, array('label' => "Update"));
+            ->add('save', SubmitType::class, array('label' => 'Update'));
 
         $form->handleRequest($request);
 
@@ -114,7 +119,7 @@ class ArticleController extends Controller
 
     public function deleteAction($slug)
     {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $article = $this->get('blog.article.repository')->findOneBy(array('slug' => $slug));
         $this->get('blog.tag')->removeTags($article);
@@ -150,15 +155,21 @@ class ArticleController extends Controller
 
     public function searchAction(Request $request)
     {
-        $search = $request->query->get("s");
-        $articles = $this->get('blog.article.repository')->findAllArticles($search);
+        $search = $request->query->get('s');
+        $type = $request->query->get('type');
+
+        if ('tag' === $type) {
+            $articles = $this->get('blog.article.repository')->findArticlesByTag($search);
+        } else {
+            $articles = $this->get('blog.article.repository')->findAllArticles($search);
+        }
         $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
         $articles = $pagerfanta->getCurrentPageResults();
 
         return $this->render('BlogBundle:Article:search_list.html.twig', array(
             'search' => $search,
             'articles' => $articles,
-            'isNextPage' => $pagerfanta->hasNextPage()
+            'isNextPage' => $pagerfanta->hasNextPage(),
         ));
     }
 }
