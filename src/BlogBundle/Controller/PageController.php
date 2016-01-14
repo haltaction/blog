@@ -14,6 +14,9 @@ class PageController extends Controller
             ->findOne([
                 'slug' => $slug
             ]);
+        if (is_null($page)) {
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('@Blog/Page/view.html.twig', [
             'page' => $page

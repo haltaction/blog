@@ -29,6 +29,9 @@ class ArticleRepository extends DocumentRepository
 
     private function sortMap($sortBy)
     {
+        if (!array_key_exists($sortBy, $this->map)) {
+            throw new \Exception("Wrong \"sortBy\" value \"$sortBy\".");
+        }
         return $this->map[$sortBy];
     }
 

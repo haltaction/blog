@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ArticleController extends Controller
 {
@@ -40,9 +41,13 @@ class ArticleController extends Controller
     {
         $request = Request::createFromGlobals();
         $sort = $request->get('sort');
-        $articles = $this->get('blog.article.repository')->getAllArticles($sort);
-        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
-        $articles = $pagerfanta->getCurrentPageResults();
+        try {
+            $articles = $this->get('blog.article.repository')->getAllArticles($sort);
+            $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($articles);
+            $articles = $pagerfanta->getCurrentPageResults();
+        } catch (\Exception $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
 
         return $this->render('BlogBundle:Article:list.html.twig', array(
             'articles' => $articles,
