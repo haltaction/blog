@@ -25,10 +25,6 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
 
-            $article->setTags(
-                $this->get('blog.tag')->getTagIds($article->getTags())
-            );
-
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
@@ -103,7 +99,7 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
             $article->setTags(
-                $this->get('blog.tag')->updateTagsIds($article, $articleOld)
+                $this->get('blog.tag')->updateTags($article, $articleOld)
             );
 
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
@@ -146,7 +142,7 @@ class ArticleController extends Controller
         $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($article->getComments());
         $comments = $pagerfanta->getCurrentPageResults();
 
-        return $this->render('@Blog/Article/view.html.twig', array(
+        return $this->render('BlogBundle:Article:view.html.twig', array(
             'article' => $article,
             'comments' => $comments,
             'isNextPage' => $pagerfanta->hasNextPage(),

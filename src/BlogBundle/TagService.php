@@ -30,25 +30,26 @@ class TagService
         $this->documentManager = $documentManager;
     }
 
-    /**
-     * @param array $tags
-     *
-     * @return array
-     */
-    public function getTagIds($tags)
-    {
-        foreach ($tags as $key => &$tag) {
-            if (empty($key)) {
-                // skip empty tags
-                unset($tags[$key]);
-                continue;
-            }
-            $tagDocument = $this->createNewTag($key);
-            $tag = $tagDocument->getId();
-        }
-
-        return $tags;
-    }
+//    /**
+//     * @param array $tags
+//     *
+//     * @return array
+//     */
+//    public function getTagIds($tags)
+//    {
+//        foreach ($tags as $key => $tag) {
+//            if (empty($tag)) {
+//                // skip empty tags
+//                unset($tags[$tag]);
+//                continue;
+//            }
+//            $tagDocument = $this->createNewTag($tag);
+//            unset($tags[$key]);
+//            $tags[$tagDocument->getId()] = $tag;
+//        }
+//
+//        return $tags;
+//    }
 
     /**
      * @param $tag string
@@ -68,34 +69,27 @@ class TagService
         return $tagDocument;
     }
 
-    public function updateTagsIds(Article $articleNew, Article $articleOld)
+    public function updateTags(Article $articleNew, Article $articleOld)
     {
         $tagsNew = $articleNew->getTags();
         $tagsOld = $articleOld->getTags() ?: [];
 
         foreach ($tagsNew as $key => $tag) {
-            if (empty($key)) {
+            if (empty($tag)) {
                 // skip empty tags
                 unset($tagsNew[$key]);
                 continue;
             }
-            if (array_key_exists($key, $tagsOld)) {
-                // tag already exist, just get id
-                $tagsNew[$key] = $this->tagRepository->getTagByName($key)->getId();
-            } else {
+            if (false === array_search($tag, $tagsOld)) {
                 // create tag & increment number
-                $tagsNew[$key] = $this->createNewTag($key)->getId();
+                $this->createNewTag($tag);
             }
         }
 
         foreach ($tagsOld as $key => $tag) {
-            if (empty($key)) {
-                // skip empty tags
-                continue;
-            }
-            if (!array_key_exists($key, $tagsNew)) {
+            if (false === array_search($tag, $tagsNew)) {
                 // decrement removed or changed tags
-                $tagDocument = $this->tagRepository->getTagByName($key)->decrementNumberArticles();
+                $tagDocument = $this->tagRepository->getTagByName($tag)->decrementNumberArticles();
                 $this->documentManager->persist($tagDocument);
             }
         }

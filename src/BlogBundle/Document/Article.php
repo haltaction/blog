@@ -13,8 +13,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *  repositoryClass="BlogBundle\Document\ArticleRepository"
  * )
  * @MongoDB\Indexes(
- *  @MongoDB\Index(keys={"title"="asc"}),
- *  @MongoDB\Index(keys={"content"="asc"}),
+ *  @MongoDB\Index(keys={"title"="text", "content"="text", "tags"="text"}),
+ *  @MongoDB\Index(keys={"title"="asc", "updatedAt"="desc"}),
+ *  @MongoDB\Index(keys={"content"="asc", "updatedAt"="desc"}),
+ *  @MongoDB\Index(keys={"tags"="asc", "updatedAt"="desc"}),
  * )
  * @Gedmo\SoftDeleteable(
  *   fieldName="deletedAt"
@@ -30,8 +32,9 @@ class Article
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=250)
-     * @Assert\Regex("/^[\w\d\p{L} .,-]*$/u",
-     *      message="Special characters not allowed"
+     * @Assert\Regex("/[<>\[\]{}@#%*&;]+/u",
+     *      message="Special characters not allowed",
+     *      match=false
      * )
      *
      * @MongoDB\String()
@@ -53,7 +56,14 @@ class Article
     protected $content;
 
     /**
-     * @MongoDB\Hash()
+     * @Assert\All(
+     *      @Assert\Regex("/[<>\[\]{}@#%*&;]+/u",
+     *          message="Special characters not allowed",
+     *          match=false
+     *      )
+     * )
+     *
+     * @MongoDB\Collection()
      */
     protected $tags;
 

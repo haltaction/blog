@@ -26,8 +26,8 @@ class ArticleType extends AbstractType
         $builder->get('tags')
             ->addModelTransformer(new CallbackTransformer(
                 // from Document to form element
-                function ($mongoHash) {
-                    return ($mongoHash) ? implode(',', array_keys($mongoHash)) : null;
+                function ($array) {
+                    return ($array) ? implode(',', $array) : null;
                 },
                 // from form element to mongo Hash with empty values(Tag ids)
                 function ($tagsString) {
@@ -35,7 +35,6 @@ class ArticleType extends AbstractType
                     $tags = array_map('trim', $tags);
                     $tags = str_replace('.', '', $tags);
                     $tags = array_unique($tags);
-                    $tags = array_fill_keys($tags, '');
 
                     return $tags;
                 }

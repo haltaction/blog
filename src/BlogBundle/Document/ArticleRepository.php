@@ -44,7 +44,7 @@ class ArticleRepository extends DocumentRepository
             ->addOr(
                 $query->expr()->field('content')->equals(new \MongoRegex("/.*$search.*/i"))
             )->addOr(
-                $query->expr()->field('tags.'.$search)->exists(true)
+                $query->expr()->field('tags')->equals(new \MongoRegex("/.*$search.*/i"))
             )->addOr(
                 $query->expr()->field('title')->equals(new \MongoRegex("/.*$search.*/i"))
             )->sort('updatedAt', 'desc')
@@ -60,7 +60,7 @@ class ArticleRepository extends DocumentRepository
     public function findArticlesByTag($tag)
     {
         return $this->createQueryBuilder()
-            ->field('tags.'.$tag)->exists(true)
+            ->field('tags')->equals(new \MongoRegex("/.*$tag.*/i"))
             ->sort('updatedAt', 'desc')
             ->getQuery()
             ->toArray();
