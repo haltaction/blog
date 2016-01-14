@@ -45,7 +45,7 @@
                     <a href="{{ path('blog_list_articles') }}">Главная</a>
                 </li>
                 <li>
-                    <a href="#">Об авторе</a>
+                    <a href="{{ path('blog_page_view', {'slug': 'about'}) }}">Об авторе</a>
                 </li>
                 <li>
                     {% block login_logout %}
@@ -99,7 +99,7 @@
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                <p>Copyright &copy; Symfony blog 2014</p>
+                <p>Владимир Фиалковский &copy; Symfony blog {{ "now"|date("Y") }}</p>
             </div>
         </div>
         <!-- /.row -->

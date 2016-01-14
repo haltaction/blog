@@ -1,6 +1,6 @@
 BlogBundle\Document\Article:
     article_{1..30}:
         title: <sentence($nbWords = 3)>
-        content: <text($maxNbChars = 800)>
+        content: <text($maxNbChars = 900)>
         tags: [@tag1->name, @tag2->name]
         comments: 25x @comment_*

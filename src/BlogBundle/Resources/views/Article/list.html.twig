@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="col-lg-8">
-    <h1>Список статтей</h1>
+    <h1>Список статей</h1>
         <span>Статьи отсортированы:
             {% set sort = app.request.get('sort') %}
             {% if (("newest" == sort) or (sort is empty)) %}

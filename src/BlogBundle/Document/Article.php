@@ -15,7 +15,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @MongoDB\Indexes(
  *  @MongoDB\Index(keys={"title"="text", "content"="text", "tags"="text"}),
  *  @MongoDB\Index(keys={"title"="asc", "updatedAt"="desc"}),
- *  @MongoDB\Index(keys={"content"="asc", "updatedAt"="desc"}),
  *  @MongoDB\Index(keys={"tags"="asc", "updatedAt"="desc"}),
  * )
  * @Gedmo\SoftDeleteable(

@@ -13,7 +13,7 @@ class TwigExtension extends \Twig_Extension
 
     public function sentencesLimit($string, $sentencesNumber = 1)
     {
-        $sentences = preg_split('/(?<=[.?!])\s+(?=[a-zа-я])/i', $string);
+        $sentences = preg_split('/(?<=[.?!(...)])\s+(?=[a-z\p{L}\p{Nd}])/iu', $string);
         $sentences = array_slice($sentences, 0, $sentencesNumber);
         $result = implode(' ', $sentences);
         return $result;
