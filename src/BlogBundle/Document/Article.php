@@ -109,6 +109,7 @@ class Article
         $this->setViewsNumber(0);
         $this->viewsUsers = array();
         $this->comments = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -196,7 +197,7 @@ class Article
      */
     public function getTags()
     {
-        return $this->tags;
+        return $this->tags ?: new ArrayCollection();
     }
 
     /**

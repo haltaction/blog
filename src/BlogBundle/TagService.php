@@ -99,7 +99,7 @@ class TagService
 
     public function removeTags(Article $article)
     {
-        $tags = array_keys($article->getTags());
+        $tags = $article->getTags();
         foreach ($tags as $tag) {
             $tagDocument = $this->tagRepository->getTagByName($tag)->decrementNumberArticles();
             $this->documentManager->persist($tagDocument);
