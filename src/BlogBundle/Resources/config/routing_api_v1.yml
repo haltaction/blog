@@ -1,0 +1,6 @@
+blog_api_v1_article_list:
+    path: /article/list/{page}
+    defaults: { _controller: BlogBundle:API\V1\Api:listArticles, page:1 }
+    requirements:
+        page: \d+
+    methods: [GET]

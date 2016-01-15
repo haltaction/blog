@@ -14,29 +14,48 @@ class ArticleRepository extends DocumentRepository
     /**
      * @param $sortBy
      * @param bool $hydrate
-     * @return array
+     * @return mixed
+     * @throws \Exception
      */
-    public function getAllArticles($sortBy, $hydrate = true)
+    public function getObjectsOfArticles($sortBy, $hydrate = true)
     {
         $sortBy = (!empty($sortBy)) ? $sortBy : 'newest';
 
         return $this->createQueryBuilder()
             ->sort($this->sortMap($sortBy), 'DESC')
             ->hydrate($hydrate)
-            ->getQuery()
+            ->getQuery();
+    }
+
+    /**
+     * @param $sortBy
+     * @param bool $hydrate
+     *
+     * @return array
+     */
+    public function getAllArticles($sortBy, $hydrate = true)
+    {
+        return $this->getObjectsOfArticles($sortBy, $hydrate)
             ->toArray();
     }
 
+    /**
+     * @param $sortBy
+     * @return mixed
+     * @throws \Exception
+     */
     private function sortMap($sortBy)
     {
         if (!array_key_exists($sortBy, $this->map)) {
             throw new \Exception("Wrong \"sortBy\" value \"$sortBy\".");
         }
+
         return $this->map[$sortBy];
     }
 
     /**
      * @param $search
+     *
      * @return array
      */
     public function findAllArticles($search)
@@ -58,6 +77,7 @@ class ArticleRepository extends DocumentRepository
 
     /**
      * @param $tag
+     *
      * @return array
      */
     public function findArticlesByTag($tag)

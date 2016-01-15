@@ -21,3 +21,11 @@ twitter_login:
 
 linkedin_login:
     path: /login/check-linkedin
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+_api:
+    resource: api.yml
+    prefix: /api

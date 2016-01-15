@@ -31,6 +31,7 @@
         <service id="blog.article"
                 class="BlogBundle\ArticleService">
             <argument type="service" id="blog.article.repository"/>
+            <argument type="service" id="blog.shifter"/>
         </service>
 
         <service id="app.comment_voter"
@@ -38,6 +39,8 @@
                  public="false">
             <argument type="service" id="security.access.decision_manager"/>
             <tag name="security.voter" />
-                 </service>
+         </service>
+
+        <service id="blog.shifter" class="BlogBundle\Shifter" />
     </services>
 </container>
