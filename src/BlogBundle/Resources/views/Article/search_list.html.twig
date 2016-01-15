@@ -8,14 +8,15 @@
 {% endblock %}
 
 {% block content %}
-<h1>Результаты поиска по запросу: "{{ search }}"</h1>
+    {% set type = (app.request.get('type') == 'tag') ? "тегу" : "запросу" %}
+    <h1>{{ "Результаты поиска по %s: "|format(type) }}"{{ search }}"</h1>
     {% if articles is not empty %}
-    <ul class="articles-list">
-        {% include 'BlogBundle:Article:list_li.html.twig' %}
-    </ul>
-    <div>
-        <button class="btn btn-primary show-more" style="margin-left: 45%;" data-page="1">Show more</button>
-    </div>
+        <ul class="articles-list">
+            {% include 'BlogBundle:Article:list_li.html.twig' %}
+        </ul>
+        <div>
+            <button class="btn btn-primary show-more" style="margin-left: 45%;" data-page="1">Show more</button>
+        </div>
     {% else %}
         <p>{{ 'No results'|trans }}</p>
     {% endif %}

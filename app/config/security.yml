@@ -60,7 +60,7 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     access_control:
-#            - { path: ^/.*$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            -
+                path: ^/login$
+                allow_if: "is_anonymous() and !has_role('ROLE_USER')"
             - { path: ^/article/add$, roles: ROLE_ADMIN }
-            - { path: ^/admin/, role: ROLE_ADMIN }

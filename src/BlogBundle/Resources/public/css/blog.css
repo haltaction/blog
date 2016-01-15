@@ -86,6 +86,9 @@ footer {
 .hidden {
     display: none;
 }
+li.disabled a.edit {
+    visibility: hidden;
+}
 /* comment */
 .comment-text {
     resize: none;

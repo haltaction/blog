@@ -51,6 +51,22 @@ class TagService
 //        return $tags;
 //    }
 
+
+    /**
+     * @param Article $article
+     * @return mixed
+     */
+    public function createTags(Article $article)
+    {
+        $tags = $article->getTags();
+
+        foreach ($tags as $tag) {
+            $this->createNewTag($tag);
+        }
+
+        return $tags;
+    }
+
     /**
      * @param $tag string
      *

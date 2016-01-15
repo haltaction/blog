@@ -1,9 +1,11 @@
 {% extends 'BlogBundle::base.html.twig' %}
 
+{% block title  %}Login{% endblock %}
+
 {% block login %}
 <div class="row">
     <div class="col-md-6 login-wrapper">
-        <h3>Login as admin</h3>
+        <h3>Войти как Admin</h3>
 
         {% for type, messages in app.session.flashBag.all %}
             {% for message in messages %}
@@ -20,7 +22,7 @@
 
     </div>
     <div class="col-md-6">
-        <h3>Login as user</h3>
+        <h3>Войти как User</h3>
         <div class="row">
             {% for owner in hwi_oauth_resource_owners() %}
                 <a href="{{ hwi_oauth_login_url(owner) }}" class="btn btn-default btn-circle-lg">{{ owner | trans({}, 'HWIOAuthBundle') }}</a>

@@ -6,7 +6,7 @@
             <p class="list-group-item-text">{{ comment.content }}</p>
             {% if is_granted("ROLE_ADMIN") or (app.user and (app.user.id == comment.userId)) %}
                 <div class="admin-links">
-                    <a href="{{ path('blog_article_edit_comment', {'slug': article.slug, 'comment_id': comment.id }) }}" class="btn btn-info btn-xs" rel="nofollow">Edit</a>
+                    <a href="{{ path('blog_article_edit_comment', {'slug': article.slug, 'comment_id': comment.id }) }}" class="btn btn-info btn-xs edit" rel="nofollow">Edit</a>
                     <a href="{{ path('blog_article_delete_comment', {'slug': article.slug, 'comment_id': comment.id}) }}" class="pull-right btn btn-danger btn-xs" onclick="return confirm('Are you sure?')" rel="nofollow">Delete</a>
                 </div>
             {% endif %}

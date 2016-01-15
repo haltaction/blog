@@ -49,6 +49,10 @@ class Article
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=1000)
+     * @Assert\Regex("/[\[\]{}@#*]+/u",
+     *          message="Special characters not allowed",
+     *          match=false
+     *      )
      *
      * @MongoDB\String()
      */

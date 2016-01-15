@@ -25,6 +25,7 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
+            $this->get('blog.tag')->createTags($article);
 
             $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
@@ -159,7 +160,9 @@ class ArticleController extends Controller
         $search = $request->query->get('s');
         $type = $request->query->get('type');
 
-        if ('tag' === $type) {
+        if (empty($search)) {
+            $articles = [];
+        } elseif ('tag' === $type) {
             $articles = $this->get('blog.article.repository')->findArticlesByTag($search);
         } else {
             $articles = $this->get('blog.article.repository')->findAllArticles($search);
