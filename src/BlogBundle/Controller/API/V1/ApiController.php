@@ -7,6 +7,7 @@ use BlogBundle\Document\Article;
 use BlogBundle\Event\FilterArticleEvent;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Util\Codes;
+use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +71,7 @@ class ApiController extends FOSRestController
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns articles obj with first 10 comments",
+     *  description="Returns articles obj without comments",
      *  requirements={
      *      {"name"="slug",    "dataType"="string",    "requirement"="true"}
      *  },
@@ -85,8 +86,6 @@ class ApiController extends FOSRestController
      *      "beta" = "#10A54A"
      *  }
      * )
-     *
-     *
      *
      * @ParamConverter("article", class="BlogBundle\Document\Article", options={"mapping": {"slug": "slug"}})
      *
@@ -105,7 +104,50 @@ class ApiController extends FOSRestController
 
         return $this->view(
             [
-                $this->get('blog.article')->getArticleDto($article)
+                $this->get('blog.article')->getArticleDto($article),
+            ],
+            Codes::HTTP_OK
+        );
+    }
+
+    /**
+     * Access URI /api/v1/article/{slug}/comment/list/{page}.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns articles obj with first 10 comments",
+     *  requirements={
+     *      {"name"="slug",    "dataType"="string",    "requirement"="true"},
+     *      {"name"="page",    "dataType"="int",       "requirement"="false"}
+     *  },
+     *  output="BlogBundle\Document\Comment",
+     *  section="Article API",
+     *  statusCodes={
+     *      200="Returned when request was handled with success",
+     *      400="Returned when bad request",
+     *      500="Returned when there is a server side error",
+     *  },
+     *  tags={
+     *      "beta" = "#10A54A"
+     *  }
+     * )
+     *
+     * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
+     *
+     * @param Article $article
+     * @param $page
+     *
+     * @return View
+     */
+    public function getCommentsListAction(Article $article, $page)
+    {
+        $pagerfanta = $this->get('blog.article')->getPagerfantaByArray($article->getComments());
+        $pagerfanta->setCurrentPage($page);
+
+        return $this->view(
+            [
+                'data' => $pagerfanta->getCurrentPageResults(),
+                'isNextPage' => $pagerfanta->hasNextPage(),
             ],
             Codes::HTTP_OK
         );

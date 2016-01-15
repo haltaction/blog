@@ -9,3 +9,10 @@ blog_api_v1_article_view:
     path: /article/{slug}
     defaults: { _controller: BlogBundle:API\V1\Api:viewArticle }
     methods: [GET]
+
+blog_api_v1_comment_list:
+    path: /article/{slug}/comment/list/{page}
+    defaults: { _controller: BlogBundle:API\V1\Api:getCommentsList, page:1 }
+    requirements:
+        page: \d+
+    methods: [GET]

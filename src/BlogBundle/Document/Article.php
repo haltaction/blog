@@ -43,6 +43,7 @@ class Article
     /**
      * @Gedmo\Slug(fields={"title"})
      * @MongoDB\String()
+     * @MongoDB\Index(unique=true)
      */
     protected $slug;
 
