@@ -4,3 +4,8 @@ blog_api_v1_article_list:
     requirements:
         page: \d+
     methods: [GET]
+
+blog_api_v1_article_view:
+    path: /article/{slug}
+    defaults: { _controller: BlogBundle:API\V1\Api:viewArticle }
+    methods: [GET]

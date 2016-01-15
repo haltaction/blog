@@ -2,8 +2,10 @@
 
 namespace BlogBundle;
 
+use BlogBundle\Document\Article;
 use BlogBundle\Document\ArticleRepository;
 use BlogBundle\Model\ArticleList;
+use BlogBundle\Model\ArticleView;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -69,5 +71,10 @@ class ArticleService
         }
 
         return $articleDto;
+    }
+
+    public function getArticleDto(Article $article)
+    {
+        return $this->shifter->toDto($article, new ArticleView());
     }
 }
