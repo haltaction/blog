@@ -41,7 +41,7 @@ class ArticleListener
         $viewUser = $article->findViewUser($userInfo);
         if (empty($viewUser)) {
             $article->addViewsUser($userInfo)->incrementViewsNumber();
-            $this->documentManager->persist($article);
+//            $this->documentManager->persist($article);
             $this->documentManager->flush();
         }
     }

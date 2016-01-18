@@ -46,7 +46,7 @@ class CommentController extends Controller
             $comment->setUserName($this->getUser()->getUsername());
             $article->addComment($comment);
 
-            $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
+//            $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
             return $this->redirectToRoute('blog_view_article', [
@@ -144,7 +144,7 @@ class CommentController extends Controller
             throw new AccessDeniedException();
         }
         $article->deleteComment($comment);
-        $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
+//        $this->get('doctrine.odm.mongodb.document_manager')->persist($article);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return $this->redirectToRoute('blog_view_article', [

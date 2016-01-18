@@ -2,4 +2,4 @@ BlogBundle\Document\Page:
     page_about:
         title: 'Об авторе'
         slug: 'about'
-        content: '<img class="leftimg" src="<imageUrl(90, 120, "cats")>"> <h3>Заголовок 1</h3><span><realText(600, 2)></span> <h3>Заголовок 2</h3> <p><realText(600)> <img class="leftimg" src="<imageUrl(140, 140, "cats")>"></p> <a href="/">на главную</a>'
+        content: '<img class="leftimg" src="<imageUrl(90, 120, "cats")>"> <h3>Заголовок 1</h3><span><realText(600, 2)></span> <h3>Заголовок 2</h3> <p><realText(600)> <img class="leftimg" src="<imageUrl(140, 140, "cats")>"></p> <a href="/">на главную</a> <realText(100)>'
