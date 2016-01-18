@@ -95,7 +95,10 @@ class Article
 
     /**
      * @MongoDB\Timestamp()
-     * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(
+     *      on="change",
+     *      field={"title", "content", "tags"}
+     * )
      */
     protected $updatedAt;
 
