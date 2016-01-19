@@ -30,10 +30,11 @@ class Article
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(max=250)
-     * @Assert\Regex("/[<>\[\]{}@#%*&;]+/u",
+     * @Assert\Length(min=2, max=250)
+     * @Assert\Regex(
+     *      "/^([^\.,\!\?\:_])[0-9A-zА-яёєiїґ\s\.,\!\?\:_]{1,}$/u",
      *      message="Special characters not allowed",
-     *      match=false
+     *      match=true
      * )
      *
      * @MongoDB\String()
@@ -51,9 +52,9 @@ class Article
      * @Assert\NotBlank()
      * @Assert\Length(max=1000)
      * @Assert\Regex("/[\[\]{}@#*]+/u",
-     *          message="Special characters not allowed",
-     *          match=false
-     *      )
+     *      message="Special characters not allowed",
+     *      match=false
+     * )
      *
      * @MongoDB\String()
      */
@@ -61,10 +62,11 @@ class Article
 
     /**
      * @Assert\All(
-     *      @Assert\Regex("/[<>\[\]{}@#%*&;]+/u",
-     *          message="Special characters not allowed",
+     *      @Assert\Regex("/[<>\[\]\{\}@#%\*\&\$;=+\-\(\)\?\.\\\|\/\^\:]+/u",
+     *          message="Special characters not allowed in",
      *          match=false
-     *      )
+     *      ),
+     *      @Assert\Length(max=80)
      * )
      *
      * @MongoDB\Collection()
@@ -83,7 +85,7 @@ class Article
 
     /**
      * @MongoDB\EmbedMany(
-     *  targetDocument="BlogBundle\Document\Comment"
+     *      targetDocument="BlogBundle\Document\Comment"
      * )
      */
     protected $comments;
@@ -204,7 +206,9 @@ class Article
      */
     public function getTags()
     {
-        return $this->tags ?: new ArrayCollection();
+        $tags =  $this->tags ?: new ArrayCollection();
+
+        return (is_array($tags)) ? $tags : $tags->toArray();
     }
 
     /**
