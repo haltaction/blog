@@ -12,6 +12,15 @@ footer {
     margin: 50px 0;
 }
 
+ul.nav.navbar-nav li a {
+    display: inline-block;
+}
+ul.navbar-nav .user-name {
+    display: inline-block;
+    margin-right: -16px;
+    color: #DCDCDC;
+}
+
 .login-wrapper .req:after,
 .req label:after {
     content: " *";
@@ -98,9 +107,16 @@ li.disabled a.edit {
     display: block;
 }
 /* search form */
-.search-form div{
+.search-form {
+    float: right;
+}
+.search-form div {
     display: inline-block;
     padding-top: 12px;
+}
+/* tags */
+div.tags-cloud {
+    overflow: hidden;
 }
 /* page */
 .leftimg {

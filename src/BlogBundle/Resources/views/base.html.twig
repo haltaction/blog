@@ -50,6 +50,7 @@
                 <li>
                     {% block login_logout %}
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <span class="user-name">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }},</span>
                             <a href="{{ path('fos_user_security_logout') }}">
                                 {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                             </a>
