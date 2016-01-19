@@ -1,4 +1,5 @@
 {% extends "BlogBundle::base.html.twig" %}
+{% form_theme form 'BlogBundle:Form:form_errors.html.twig' %}
 
 {% block title %}Article:add{% endblock %}
 
@@ -12,7 +13,8 @@
         {{ form_row(form.content, {'attr': {'class': 'form-control tinymce req'}}) }}
     </div>
     <div class="form-group row">
-        {{ form_row(form.tags, {'attr': {'class': 'form-control'}}) }}
+        {% include 'BlogBundle:Article:tag_form_row_custom.html.twig' %}
+        {#{{ form_row(form.tags, {'attr': {'class': 'form-control'}}) }}#}
     </div>
     <div class="form-group row col-md-4 col-md-offset-4">
         {{ form_row(form.save, {'attr': {'class': 'form-control btn btn-success'}}) }}

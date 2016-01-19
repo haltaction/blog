@@ -60,6 +60,7 @@ class ArticleRepository extends DocumentRepository
      */
     public function findAllArticles($search)
     {
+        $search = preg_quote($search);
         $query = $this->createQueryBuilder();
 
         $query
@@ -83,7 +84,7 @@ class ArticleRepository extends DocumentRepository
     public function findArticlesByTag($tag)
     {
         return $this->createQueryBuilder()
-            ->field('tags')->equals(new \MongoRegex("/.*$tag.*/i"))
+            ->field('tags')->equals($tag)
             ->sort('updatedAt', 'desc')
             ->getQuery()
             ->toArray();

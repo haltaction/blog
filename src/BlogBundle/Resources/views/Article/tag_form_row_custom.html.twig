@@ -1,0 +1,15 @@
+{% form_theme form _self %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors is defined and errors|length > 0 %}
+            <ul class="errors">
+                {% for error in errors %}
+                    <li class="text-danger">{{ error.message }} {{ error.messageParameters["{{ value }}"] }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{{ form_row(form.tags, {'attr': {'class': 'form-control'}}) }}

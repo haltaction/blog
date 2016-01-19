@@ -42,6 +42,10 @@ ul.navbar-nav .user-name {
 .articles-list div.admin-links {
     margin-top: -10px;
 }
+/* article form */
+.errors + input {
+    border-color: #a94442;
+}
 /* bootsrtap component callout */
 .bs-callout {
     padding: 10px;

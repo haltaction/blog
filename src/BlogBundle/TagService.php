@@ -30,30 +30,9 @@ class TagService
         $this->documentManager = $documentManager;
     }
 
-//    /**
-//     * @param array $tags
-//     *
-//     * @return array
-//     */
-//    public function getTagIds($tags)
-//    {
-//        foreach ($tags as $key => $tag) {
-//            if (empty($tag)) {
-//                // skip empty tags
-//                unset($tags[$tag]);
-//                continue;
-//            }
-//            $tagDocument = $this->createNewTag($tag);
-//            unset($tags[$key]);
-//            $tags[$tagDocument->getId()] = $tag;
-//        }
-//
-//        return $tags;
-//    }
-
-
     /**
      * @param Article $article
+     *
      * @return mixed
      */
     public function createTags(Article $article)
