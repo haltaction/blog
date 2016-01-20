@@ -65,7 +65,7 @@ class ArticleRepository extends DocumentRepository
 
         $query
             ->addOr(
-                $query->expr()->field('content')->equals(new \MongoRegex("/.*$search.*/i"))
+                $query->expr()->field('content')->equals(new \MongoRegex("/.*".htmlspecialchars($search).".*/i"))
             )->addOr(
                 $query->expr()->field('tags')->equals(new \MongoRegex("/.*$search.*/i"))
             )->addOr(

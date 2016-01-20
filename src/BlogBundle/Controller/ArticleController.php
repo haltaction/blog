@@ -157,7 +157,7 @@ class ArticleController extends Controller
 
     public function searchAction(Request $request)
     {
-        $search = $request->query->get('s');
+        $search = trim($request->query->get('s'));
         $type = $request->query->get('type');
 
         if (empty($search)) {
