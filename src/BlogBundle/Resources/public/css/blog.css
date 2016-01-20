@@ -10,6 +10,7 @@ body {
 
 body div {
     overflow: hidden;
+    word-wrap: break-word;
 }
 
 footer {
@@ -118,9 +119,12 @@ li.disabled a.edit {
 .search-form {
     float: right;
 }
-.search-form div {
-    display: inline-block;
+.search-form form {
     padding-top: 12px;
+}
+.search-form form > * {
+    display: inline-block;
+    vertical-align: middle;
 }
 /* tags */
 div.tags-cloud {
