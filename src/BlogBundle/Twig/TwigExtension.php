@@ -16,7 +16,7 @@ class TwigExtension extends \Twig_Extension
         $sentences = preg_split('/(?<=[.?!(...)])\s+(?=[a-z\p{L}\p{Nd}])/iu', $string);
         $sentences = array_slice($sentences, 0, $sentencesNumber);
         $result = implode(' ', $sentences);
-        return $result;
+        return html_entity_decode($result);
     }
 
     public function getName()
