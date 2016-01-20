@@ -17,5 +17,16 @@
                 <!--<argument type="string" key="linkedin">linkedinId</argument>-->
             </argument>
         </service>
+
+        <service id="user_custom_auth_fail_handler" class="UserBundle\AuthenticationHandler\CustomUserAuthenticationFailureHandler">
+            <argument type="service" id="http_kernel" />
+            <argument type="service" id="security.http_utils" />
+            <argument type="collection" /> <!-- Options -->
+            <argument type="service" id="logger" on-invalid="null" />
+        </service>
+        <service id="user_custom_auth_success_handler" class="UserBundle\AuthenticationHandler\CustomUserAuthenticationSuccessHandler">
+            <argument type="service" id="security.http_utils" />
+            <argument type="collection" /> <!-- Options -->
+        </service>
     </services>
 </container>

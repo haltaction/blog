@@ -6,7 +6,10 @@
 {% if error %}
     <p class="bg-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
 {% endif %}
-<form action="{{ path("fos_user_security_check") }}" method="post">
+{% if (app.request.headers.get('referer') != app.request.getUri()) %}
+    {% set referer = app.request.headers.get('referer') %}
+{% endif %}
+<form action="{{ path("fos_user_security_check", {'referer': referer}) }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
     <div class="form-group">
@@ -31,5 +34,6 @@
     <div class="form-group">
         <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-success form-control"/>
     </div>
+    <input type="hidden" name="_target_path" value="{{ referer }}" />
 </form>
 {% endblock fos_user_content %}
