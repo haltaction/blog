@@ -48,7 +48,6 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager
-                use_referer: true
 
             logout:       true
             anonymous:    true

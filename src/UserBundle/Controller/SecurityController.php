@@ -50,11 +50,19 @@ class SecurityController extends BaseController
                 : null;
         }
 
+        // pass custom referer to form
+        $referer = '';
+        if ($request->headers->get('referer') !== $request->getUri()) {
+            $referer = $request->headers->get('referer');
+        } else {
+            $referer = $request->getSession()->get('custom_referer');
+        }
+
         return $this->renderLogin(array(
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
-            'referer' => $session->get('custom_referer')
+            'referer' => $referer
         ));
     }
 
