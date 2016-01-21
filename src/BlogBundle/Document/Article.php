@@ -32,7 +32,7 @@ class Article
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=250)
      * @Assert\Regex(
-     *      "/^([^\.,\!\?\:_])[0-9A-zА-яёєiїґ\s\.,\!\?\:_]{1,}$/u",
+     *      "/^([^<>\[\]\{\}@#%\*\&\$;=+\-\(\)\?\.\\\|\/\^\:_\'])[0-9A-zА-яёєiїґ\s\.,\!\?\:_]{1,}$/u",
      *      message="Special characters not allowed",
      *      match=true
      * )
@@ -62,7 +62,7 @@ class Article
 
     /**
      * @Assert\All(
-     *      @Assert\Regex("/[<>\[\]\{\}@#%\*\&\$;=+\-\(\)\?\.\\\|\/\^\:]+/u",
+     *      @Assert\Regex("/[<>\[\]\{\}@#%\*\&\$;=+\-\(\)\?\.\\\|\/\^\:_\']+/u",
      *          message="Special characters not allowed in",
      *          match=false
      *      ),
